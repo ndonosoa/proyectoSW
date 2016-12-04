@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204010317) do
+ActiveRecord::Schema.define(version: 20161204215830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,8 +65,9 @@ ActiveRecord::Schema.define(version: 20161204010317) do
     t.string   "provider_tel"
     t.string   "provider_email"
     t.integer  "city_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "provider_address"
     t.index ["city_id"], name: "index_providers_on_city_id", using: :btree
   end
 
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20161204010317) do
     t.integer  "user_range"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "user_rut"
   end
 
   add_foreign_key "cities", "regions"

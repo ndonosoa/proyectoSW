@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :user_email
       t.integer :user_state
       t.integer :user_range
+      t.integer :user_rut
 
       t.timestamps
     end

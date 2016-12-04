@@ -1,5 +1,17 @@
 Rails.application.routes.draw do
 
+  get 'pene/index'
+
+  get 'pene/show'
+
+  get 'pene/create'
+
+  get 'pene/update'
+
+  get 'pene/delete'
+
+  get 'pene/new'
+
 	resources :regions
    get 'regions/create'
   resources :users

@@ -5,5 +5,32 @@
 <% end %>
 
 <section class="content invoice">
-  <p>Find me in app/views/providers/new.html.erb</p>
+  <%= form_for(@provider) do |f| %>
+		<div>
+			<%= f.label "Ingrese nombre del proveedor" %>
+			<%= f.text_field :provider_name %>
+		</div>
+		<div>
+			<%= f.label "Ingrese rut de proveedor" %>
+			<%= f.text_field :provider_rut %>
+		</div>
+		<div>
+			<%= f.label "Ingrese clave de proveedor" %>
+			<%= f.text_field :provider_address %>
+		</div>
+		<div>
+			<%= f.label "Ingrese telefono de proveedor" %>
+			<%= f.text_field :provider_tel %>
+		</div>
+		<div>
+			<%= f.label "Ingrese email de proveedor" %>
+			<%= f.text_field :provider_email %>
+		</div>
+		<div>
+		  <%= f.collection_select(:city_id, City.all, :id, :city_name, include_blank: true) %>
+		</div>
+		<div>
+			<%= f.submit "Agregar" %>
+		</div>
+<%end%>
 </section>
