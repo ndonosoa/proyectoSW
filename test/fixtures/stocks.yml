@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inicial_stock: 1
+  stock_state: 1
+  actual_stock: 1
+  product: one
+
+two:
+  inicial_stock: 1
+  stock_state: 1
+  actual_stock: 1
+  product: two
