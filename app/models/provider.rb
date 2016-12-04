@@ -1,3 +1,4 @@
 class Provider < ApplicationRecord
-  belongs_to :city
+  has_one :city
+  has_one :region, :throguh :city
 end

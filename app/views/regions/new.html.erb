@@ -5,5 +5,29 @@
 <% end %>
 
 <section class="content invoice">
-  <p>Find me in app/views/regions/new.html.erb</p>
+    <%= form_for(@region) do |f| %>
+      <% @region.errors.full_messages.each do |message| %>
+        <div>
+          * <%= message %>
+        </div>
+      <%end%>
+  	   <table class="form">
+  	    <tr>
+  	    	<td>
+  	   			<%= f.label "Ingrese nombre de Region" %>
+  	   		</td>
+  	    </tr>
+  	   	<tr>
+  	   		<td>
+  	   			<%= f.text_field :region_name %>
+  	   		</td>
+  	   	</tr>
+  	   	<tr>
+  	   		<td>
+  	   			<%= f.submit "Guardar" %>
+  	   		</td>
+  	   		
+  	   	</tr>
+   	   </table>
+  	<%end%>
 </section>

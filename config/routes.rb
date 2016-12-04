@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
 	resources :regions
+   get 'regions/create'
   resources :users
   resources :providers
   resources :cities
   resources :categories
-root 'users#new'
+root 'regions#index'
 
 =begin
   get 'regions/index'

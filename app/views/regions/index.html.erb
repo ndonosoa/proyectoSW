@@ -5,5 +5,10 @@
 <% end %>
 
 <section class="content invoice">
-  <p>Find me in app/views/regions/index.html.erb</p>
+  		<% @region.each do |t| %>
+  		 <div>
+ 			<%= t.region_name%>
+ 			<%= t.id %>
+ 		 </div>
+ 		<%end%>
 </section>

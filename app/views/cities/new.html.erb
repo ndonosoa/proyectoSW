@@ -1,0 +1,33 @@
+<section class="content invoice">
+	<%= form_for(@city) do |f| %>
+      <% @city.errors.full_messages.each do |message| %>
+        <div>
+          * <%= message %>
+        </div>
+      <%end%>
+  	   <table class="form">
+  	    <tr>
+  	    	<td>
+  	   			<%= f.label "Ingrese nombre de ciudad" %>
+  	   		</td>
+  	   		<td>
+  	   			<%= f.label "Ingrese id de Region correspondiente" %>
+  	   		</td>
+  	    </tr>
+  	   	<tr>
+  	   		<td>
+  	   			<%= f.text_field :city_name %>
+  	   		</td>
+  	   		<td>
+          <%= f.collection_select(:region_id, Region.all, :id, :region_name, include_blank: true) %>
+  	   		</td>
+  	   	</tr>
+  	   	<tr>
+  	   		<td>
+  	   			<%= f.submit "Guardar" %>
+  	   		</td>
+  	   		
+  	   	</tr>
+   	   </table>
+  	<%end%>
+</section>
