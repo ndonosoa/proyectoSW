@@ -1,16 +1,8 @@
 Rails.application.routes.draw do
 
-  get 'pene/index'
+  get 'home/index'
 
-  get 'pene/show'
-
-  get 'pene/create'
-
-  get 'pene/update'
-
-  get 'pene/delete'
-
-  get 'pene/new'
+  devise_for :users
 
 	resources :regions
    get 'regions/create'
@@ -18,7 +10,8 @@ Rails.application.routes.draw do
   resources :providers
   resources :cities
   resources :categories
-root 'regions#index'
+  resources :homes
+root 'home#index'
 
 =begin
   get 'regions/index'

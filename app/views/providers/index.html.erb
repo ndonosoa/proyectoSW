@@ -5,5 +5,31 @@
 <% end %>
 
 <section class="content invoice">
-  <p>Find me in app/views/providers/index.html.erb</p>
+  <% @provider.each do |a| %>
+    <div>
+      <%= a.provider_name %>
+    </div>
+     <div>
+       <%= a.city.city_name %>
+     </div>
+     <div>
+        <%= a.provider_rut %>
+     </div>
+     <div>
+        <%= a.provider_tel %>
+     </div>
+      <div>
+        <%= a.provider_email %>
+      </div>
+      <div>
+        <%= a.city.city_name %>
+      </div>
+      <div>
+        <%= a.provider_address %>
+      </div>
+      <div>
+        <%= a.city.region.region_name %>
+      </div>
+
+  <%end%>
 </section>

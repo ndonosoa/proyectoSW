@@ -3,7 +3,6 @@
     <h1>Providers <small>#new</small></h1>
   </section>
 <% end %>
-
 <section class="content invoice">
   <%= form_for(@provider) do |f| %>
 		<div>
@@ -29,6 +28,9 @@
 		<div>
 		  <%= f.collection_select(:city_id, City.all, :id, :city_name, include_blank: true) %>
 		</div>
+      <div>
+        <%= f.collection_select(:city_id, Region.all, :id, :region_name, include_blank: true) %>
+      </div>
 		<div>
 			<%= f.submit "Agregar" %>
 		</div>

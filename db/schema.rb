@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161204215830) do
+ActiveRecord::Schema.define(version: 20161207233902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,15 +115,25 @@ ActiveRecord::Schema.define(version: 20161204215830) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
     t.string   "user_name"
-    t.string   "user_pass"
-    t.string   "user_tel"
-    t.string   "user_email"
-    t.integer  "user_state"
-    t.integer  "user_range"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.string   "user_rut"
+    t.string   "user_tel"
+    t.integer  "user_state",             default: 1
+    t.integer  "user_range",             default: 0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
   add_foreign_key "cities", "regions"
@@ -135,6 +145,5 @@ ActiveRecord::Schema.define(version: 20161204215830) do
   add_foreign_key "purchase_details", "products"
   add_foreign_key "purchase_details", "purchases"
   add_foreign_key "purchases", "providers"
-  add_foreign_key "purchases", "users"
   add_foreign_key "stocks", "products"
 end

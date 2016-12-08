@@ -6,6 +6,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get new" do
+    get users_new_url
+    assert_response :success
+  end
+
   test "should get create" do
     get users_create_url
     assert_response :success
@@ -16,13 +21,8 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get update" do
-    get users_update_url
-    assert_response :success
-  end
-
-  test "should get new" do
-    get users_new_url
+  test "should get edit" do
+    get users_edit_url
     assert_response :success
   end
 
