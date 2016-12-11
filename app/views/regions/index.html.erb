@@ -5,10 +5,22 @@
 <% end %>
 
 <section class="content invoice">
-  		<% @region.each do |t| %>
-  		 <div>
- 			<%= t.region_name %>
- 			<%= t.id %>
- 		 </div>
- 		<%end%>
+  <h1>Ciudades</h1>
+
+  <table id="cities" class="display">
+    <thead>
+    <tr>
+      <th>Nombre Region</th>
+      <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @region.each do |r| %>
+        <tr>
+          <td><%= r.region_name %></td>
+          <td><%= link_to 'Editar', edit_region_path(r) %></td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
 </section>

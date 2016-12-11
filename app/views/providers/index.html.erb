@@ -5,31 +5,32 @@
 <% end %>
 
 <section class="content invoice">
-  <% @provider.each do |a| %>
-    <div>
-      <%= a.provider_name %>
-    </div>
-     <div>
-       <%= a.city.city_name %>
-     </div>
-     <div>
-        <%= a.provider_rut %>
-     </div>
-     <div>
-        <%= a.provider_tel %>
-     </div>
-      <div>
-        <%= a.provider_email %>
-      </div>
-      <div>
-        <%= a.city.city_name %>
-      </div>
-      <div>
-        <%= a.provider_address %>
-      </div>
-      <div>
-        <%= a.city.region.region_name %>
-      </div>
+  <h1>Proveedores</h1>
 
-  <%end%>
+  <table id="cities" class="display">
+    <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Rut</th>
+      <th>Teléfono</th>
+      <th>Email</th>
+      <th>Ciudad</th>
+      <th>Region</th>
+      <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @provider.each do |t| %>
+        <tr>
+          <td><%= t.provider_name %></td>
+          <td><%= t.provider_rut %></td>
+          <td><%= t.provider_tel%></td>
+          <td><%= t.provider_email %></td>
+          <td><%= t.city.city_name %></td>
+          <td><%= t.region.region_name %></td>
+          <td><%= link_to 'Editar', edit_provider_path(t) %></td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
 </section>

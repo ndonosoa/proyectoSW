@@ -23,7 +23,8 @@ class RegionsController < ApplicationController
 
   def update
   end
-
+  def edit
+  end
   def delete
   end
 end
