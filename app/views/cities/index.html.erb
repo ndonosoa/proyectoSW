@@ -1,8 +1,22 @@
 <section class="content invoice">
- <% @city.each do |a| %>
-      <div>
-        <%= a.city_name %>
-      </div>
- <%end%>
+     <h1>Ciudades</h1>
 
+   <table id="cities" class="display">
+       <thead>
+            <tr>
+              <th>Nombre Ciudad</th>
+              <th>Id Ciudad</th>
+              <th>Nombre Region</th>
+            </tr>
+       </thead>
+        <tbody>
+           <% @city.each do |cities| %>
+              <tr>
+                <td><%= link_to(cities.city_name, cities) %></td>
+                <td><%= cities.id %></td>
+                <td><%= cities.region.region_name %></td>
+              </tr>
+           <%end%>
+        </tbody>
+    </table>
 </section>
