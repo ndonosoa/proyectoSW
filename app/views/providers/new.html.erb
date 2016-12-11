@@ -25,12 +25,12 @@
 			<%= f.label "Ingrese email de proveedor" %>
 			<%= f.text_field :provider_email %>
 		</div>
+    <div>
+        <%= f.collection_select(:region_id, Region.all, :id, :region_name, include_blank: true) %>
+    </div>
 		<div>
-		  <%= f.collection_select(:city_id, City.all, :id, :city_name, include_blank: true) %>
+		  <%= f.grouped_collection_select(:city_id, Region.order(:region_name), :cities, :region_name, :id, :city_name, include_blank: true) %>
 		</div>
-      <div>
-        <%= f.collection_select(:city_id, Region.all, :id, :region_name, include_blank: true) %>
-      </div>
 		<div>
 			<%= f.submit "Agregar" %>
 		</div>

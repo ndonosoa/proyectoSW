@@ -16,7 +16,8 @@ class ProvidersController < ApplicationController
                             provider_email: params[:provider][:provider_email],
                               provider_address: params[:provider][:provider_address],
                                 provider_tel: params[:provider][:provider_tel],
-                                        city_id: params[:provider][:city_id])
+                                        city_id: params[:provider][:city_id],
+                                region_id: params[:provider][:region_id])
     @provider.save
   end
 
