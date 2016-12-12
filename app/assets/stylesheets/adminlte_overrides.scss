@@ -102,3 +102,8 @@ i.glyphicon-sort {
   -moz-border-radius: 6px 0 6px 6px;
   border-radius: 6px 0 6px 6px;
 }
+
+.nav.nav-pills > li.active > a, .nav.nav-pills > li.active > a:hover, .nav.nav-pills > li > a, .nav.nav-pills > li > a:hover{
+  background-color:#367fa9;
+  color: white;
+}

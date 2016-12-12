@@ -1,16 +1,35 @@
-<% content_for :content_header  do %>
-    <section class="content-header">
-      <ul class="nav nav-pills col-md" align="left">
-        <li role="presentation" class="active"><a href="#">Agregar Usuario</a></li>
-        <li role="presentation"><a href="#">Editar Usuario</a></li>
-      </ul>
-      <h1>Users <small>#new</small></h1>
 
-    </section>
-<% end %>
-
+<%= render 'form' %>
 
 <section class="content invoice">
-
+  <%= form_for(@user) do |f| %>
+      <div>
+        <%= f.label "Ingrese nombre del Usuario" %>
+        <%= f.text_field :user_name %>
+      </div>
+      <div>
+        <%= f.label "Ingrese rut del Usuario" %>
+        <%= f.text_field :user_rut %>
+      </div>
+      <div class="field">
+        <%= f.label :password %>
+        <%= f.password_field :encrypted_password%>
+      </div>
+      <div>
+        <%= f.label "Ingrese telefono del usuario" %>
+        <%= f.text_field :user_tel %>
+      </div>
+      <div>
+        <%= f.label "Ingrese rango del" %>
+        <%= f.text_field :user_range %>
+      </div>
+      <div>
+        <%= f.label "Ingrese email del usuario" %>
+        <%= f.text_field :email %>
+      </div>
+      <div>
+        <%= f.submit "Agregar"%>
+      </div>
+  <%end%>
 
 </section>
