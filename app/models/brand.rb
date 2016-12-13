@@ -1,3 +1,4 @@
 class Brand < ApplicationRecord
-	belongs_to :product
+	has_many :products
+	validates :brand_name, presence: true, uniqueness: true
 end

@@ -1,19 +1,19 @@
 <%= render 'form' %>
 
 <section class="content invoice">
-  <h1>Regiones</h1>
+  <h1>Marcas</h1>
 
-  <table id="regions" class="display">
+  <table id="brands" class="display">
     <thead>
     <tr>
-      <th>Nombre Region</th>
+      <th>Nombre Marca</th>
       <th>Eliminar</th>
     </tr>
     </thead>
     <tbody>
-    <% @region.each do |r| %>
+    <% @brand.each do |r| %>
         <tr>
-          <td><%= r.region_name %></td>
+          <td><%= r.brand_name %></td>
           <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
             <%= link_to 'Eliminar',r , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
         </tr>

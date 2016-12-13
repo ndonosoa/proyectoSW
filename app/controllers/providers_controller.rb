@@ -19,7 +19,11 @@ class ProvidersController < ApplicationController
                                 provider_tel: params[:provider][:provider_tel],
                                         city_id: params[:provider][:city_id],
                                 region_id: params[:provider][:region_id])
-    @provider.save
+    if @provider.save
+      redirect_to :action => "index"
+    else
+      render :new
+    end
   end
 
   def update

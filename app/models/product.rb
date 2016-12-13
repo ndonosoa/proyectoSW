@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
   belongs_to :provider
-  has_one :brand
-  has_one :category
+  belongs_to :brand
+  belongs_to :category
   has_many :stocks
 end

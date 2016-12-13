@@ -1,9 +1,23 @@
-<% content_for :content_header  do %>
-  <section class="content-header">
-    <h1>Categories <small>#index</small></h1>
-  </section>
-<% end %>
+<%= render 'form' %>
 
 <section class="content invoice">
-  <p>Find me in app/views/categories/index.html.erb</p>
+  <h1>Categorias</h1>
+
+  <table id="regions" class="display">
+    <thead>
+    <tr>
+      <th>Nombre Categoria</th>
+      <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @category.each do |r| %>
+        <tr>
+          <td><%= r.category_name %></td>
+          <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <%= link_to 'Eliminar',r , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
 </section>

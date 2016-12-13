@@ -1,0 +1,10 @@
+<% content_for :content_header  do %>
+    <section class="content-header">
+      <ul class="nav nav-pills col-md">
+        <li role="presentation" class="active"><%= link_to 'Agregar Marca', new_brand_path, method: :get %><li>
+        <li role="presentation"><%= link_to 'Ver Marcas', brands_path, method: :get %></li>
+      </ul>
+      <h1>Marcas<small>#new</small></h1>
+
+    </section>
+<% end %>

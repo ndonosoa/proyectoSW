@@ -1,6 +1,11 @@
 <%= render 'form'%>
 <section class="content invoice">
   <%= form_for(@provider) do |f| %>
+    <% @provider.errors.full_messages.each do |message| %>
+          <div>
+            * <%= message %>
+          </div>
+    <%end%>
 		<div>
 			<%= f.label "Ingrese nombre del proveedor" %>
 			<%= f.text_field :provider_name %>

@@ -7,16 +7,17 @@
        <thead>
             <tr>
               <th>Nombre Ciudad</th>
-              <th>Id Ciudad</th>
               <th>Nombre Region</th>
+              <th>Eliminar</th>
             </tr>
        </thead>
         <tbody>
            <% @city.each do |cities| %>
               <tr>
                 <td><%= link_to(cities.city_name, cities) %></td>
-                <td><%= cities.id %></td>
                 <td><%= cities.region.region_name %></td>
+                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  <%= link_to 'Eliminar',cities , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
               </tr>
            <%end%>
         </tbody>

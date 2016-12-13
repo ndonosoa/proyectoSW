@@ -11,7 +11,7 @@ class RegionsController < ApplicationController
     @region = Region.new(region_name: params[:region][:region_name])
 
     if @region.save
-      redirect_to @region
+      redirect_to :action => "index"
     else
       render :new
     end
@@ -25,6 +25,9 @@ class RegionsController < ApplicationController
   end
   def edit
   end
-  def delete
+  def destroy
+    @region = Region.find(params[:id])
+    @region.destroy
+    redirect_to :action => "index"
   end
 end
