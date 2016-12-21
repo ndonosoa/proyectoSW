@@ -28,10 +28,12 @@
 		</div>
     <div>
         <%= f.collection_select(:region_id, Region.all, :id, :region_name, include_blank: true) %>
+         <%= link_to "¿No la encuentras? Agrégala", new_region_path, method: :get %>
     </div>
 		<div>
 		  <%= f.grouped_collection_select(:city_id, Region.order(:region_name), :cities, :region_name, :id, :city_name, include_blank: true) %>
-		</div>
+      <%= link_to "¿No la encuentras? Agrégala", new_city_path, method: :get %>
+    </div>
 		<div>
 			<%= f.submit "Agregar" %>
 		</div>

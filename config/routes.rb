@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
 
 
-  devise_for :users
+
+  devise_for :users, :controllers => {:registrations => "users/registrations"}
   resources :brands
 	resources :regions
-   get 'regions/create'
+  resources :products
   resources :users
   resources :providers
   resources :cities

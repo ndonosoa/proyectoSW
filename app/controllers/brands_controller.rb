@@ -1,4 +1,5 @@
 class BrandsController < ApplicationController
+  before_action :set_brand, only: [:destroy, :update, :show]
   def index
     @brand = Brand.all
   end
@@ -14,21 +15,28 @@ class BrandsController < ApplicationController
   end
 
   def destroy
-    @brand = Brand.find(params[:id])
     @brand.destroy
     redirect_to :action => "index"
   end
 
   def show
-    @brand = Brand.find(params[:id])
   end
 
   def create
-    @brand = Brand.new(brand_name: params[:brand][:brand_name])
+    @brand = Brand.new(brand_params)
     if @brand.save
       redirect_to :action => "index"
     else
       render :new
     end
   end
+
+  private
+    def set_brand
+      @brand = Brand.find(params[:id])
+    end
+
+    def brand_params
+      params.require(:brand).permit(:brand_name)
+    end
 end

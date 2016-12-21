@@ -1,4 +1,6 @@
 class RegionsController < ApplicationController
+  before_action :set_region, only: [:destroy,:update,:show]
+
   def index
     @region = Region.all
   end
@@ -8,7 +10,7 @@ class RegionsController < ApplicationController
   end
 
   def create
-    @region = Region.new(region_name: params[:region][:region_name])
+    @region = Region.new(region_params)
 
     if @region.save
       redirect_to :action => "index"
@@ -18,7 +20,6 @@ class RegionsController < ApplicationController
   end
 
   def show
-     @region = Region.find(params[:id])
   end
 
   def update
@@ -26,8 +27,15 @@ class RegionsController < ApplicationController
   def edit
   end
   def destroy
-    @region = Region.find(params[:id])
     @region.destroy
     redirect_to :action => "index"
   end
+
+  private
+   def set_region
+     @region = Region.find(params[:id])
+   end
+   def region_params
+     params.require(:region).permit(:region_name)
+   end
 end

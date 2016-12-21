@@ -1,0 +1,34 @@
+<%= render 'form'%>
+
+<section class="content invoice">
+<div>
+  <% @product.each do |t| %>
+     <%= form_for(t) do |f| %>
+
+      <%= label_tag 'Filtro' %>
+      <%= text_field(:product_name, :product) %>
+      <%= f.submit "Filtrar" %>
+     <%end%>
+  <%end%>
+
+</div>
+
+  <table id="cities" class="display">
+    <thead>
+    <tr>
+      <th>Nombre Producto</th>
+      <th>Nombre Marca</th>
+      <th>Nombre categoria</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @productfiltro.each do |products| %>
+        <tr>
+          <td><%= products.product_name %></td>
+          <td><%= products.brand.brand_name%></td>
+          <td><%= products.category.category_name%></td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
+</section>

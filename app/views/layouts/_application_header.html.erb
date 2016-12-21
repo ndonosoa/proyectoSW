@@ -12,14 +12,14 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <ul class="nav navbar-nav">
-        <li>
-          <a href="#" id="asd">Productos</a>
-        </li>
-
-        <li>
-          <a href="#">Orden de compra</a>
-        </li>
       <% if @conectado == 1 %>
+            <li>
+              <a href="#" id="asd">Productos</a>
+            </li>
+
+            <li>
+              <a href="#">Orden de compra</a>
+            </li>
          <li>
             <% if current_user.user_range == 0 %>
                   <li role="presentation" class="dropdown">
