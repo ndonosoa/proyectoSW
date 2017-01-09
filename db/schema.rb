@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161207233902) do
+ActiveRecord::Schema.define(version: 20170108194722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 20161207233902) do
     t.datetime "updated_at",    null: false
     t.integer  "brand_id"
     t.integer  "category_id"
+    t.string   "product_code"
     t.index ["brand_id"], name: "index_products_on_brand_id", using: :btree
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
     t.index ["provider_id"], name: "index_products_on_provider_id", using: :btree
@@ -68,7 +69,9 @@ ActiveRecord::Schema.define(version: 20161207233902) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "provider_address"
+    t.integer  "region_id"
     t.index ["city_id"], name: "index_providers_on_city_id", using: :btree
+    t.index ["region_id"], name: "index_providers_on_region_id", using: :btree
   end
 
   create_table "purchase_details", force: :cascade do |t|
@@ -142,6 +145,7 @@ ActiveRecord::Schema.define(version: 20161207233902) do
   add_foreign_key "products", "categories"
   add_foreign_key "products", "providers"
   add_foreign_key "providers", "cities"
+  add_foreign_key "providers", "regions"
   add_foreign_key "purchase_details", "products"
   add_foreign_key "purchase_details", "purchases"
   add_foreign_key "purchases", "providers"

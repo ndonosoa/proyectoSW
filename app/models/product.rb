@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   belongs_to :provider
   belongs_to :brand
   belongs_to :category
-  has_many :stocks
-  has_many :prices
+  has_many :stocks, :dependent => :delete_all
+  has_many :prices, :dependent => :delete_all
   has_many :purchase_details
 end

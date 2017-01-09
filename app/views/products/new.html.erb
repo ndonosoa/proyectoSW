@@ -1,4 +1,40 @@
 <%= render 'form'%>
 
 <section class="content invoice">
+
+  <%= form_for(@product) do |f| %>
+        <div class="row">
+          <div class="form-group">
+            <%= f.label "Ingrese nombre del proveedor" %>
+            <%= f.collection_select(:provider_id, Provider.all, :id, :provider_name, include_blank: true) %>
+          </div>
+          <div class="form-group">
+            <%= f.label "Ingrese la marca del producto" %>
+            <%= f.collection_select(:brand_id, Brand.all, :id, :brand_name, include_blank: true) %>
+          </div>
+          <div class="form-group">
+            <%= f.label "Ingrese categoria del producto" %>
+            <%= f.collection_select(:category_id, Category.all, :id, :category_name, include_blank: true) %>
+          </div>
+          <div class="form-group">
+            <%= f.label "Ingrese nombre del producto" %>
+            <%= f.text_field :product_name %>
+          </div>
+          <div class="form-group">
+            <%= f.label "Ingrese estado del producto" %>
+            <%= f.text_field :product_state %>
+          </div>
+          <div class="form-group">
+            <%= f.label "Ingrese codigo del producto" %>
+            <%= f.text_field :product_code %>
+          </div>
+          <div class="form-group">
+            <%= label_tag 'asd' %>
+            <%= text_field_tag :asd%>
+          </div>
+          <div class="field">
+    	   			<%= f.submit "Guardar"%>
+          </div>
+        </div>
+ <%end%>
 </section>

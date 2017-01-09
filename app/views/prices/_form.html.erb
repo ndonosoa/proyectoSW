@@ -1,0 +1,9 @@
+ <section class="content invoice">
+  <%= form_for(@price) do |a| %>
+          <div class="form-group">
+            <%= a.label "Ingrese precio del producto" %>
+            <%= a.text_field :actual_price %>
+            <%= a.submit "Guardar"%>
+          </div> 
+	<%end%>
+</section>

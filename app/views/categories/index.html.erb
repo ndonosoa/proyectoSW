@@ -15,7 +15,7 @@
         <tr>
           <td><%= r.category_name %></td>
           <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            <%= link_to 'Eliminar',r , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
+            <%= link_to 'Eliminar', edit_category_path(r), method: :get, data: {confirm: 'Esta seguro?'} %> </td>
         </tr>
     <%end%>
     </tbody>

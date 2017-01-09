@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:destroy, :show, :update]
+  before_action :set_category, only: [:destroy, :show, :edit]
   def index
-    @category = Category.all
+    @category = Category.where("category_state = 1")
   end
 
   def new
@@ -10,6 +10,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
+    @category.category_state = 1
     if @category.save
       redirect_to :action => "index"
     else
@@ -20,12 +21,15 @@ class CategoriesController < ApplicationController
   def show
   end
 
-  def update
+  def edit
+    if @category.update(:category_state => '0')
+      redirect_to :action => "index"
+    else
+      render :new
+    end
   end
 
   def destroy
-    @category.destroy
-    redirect_to :action => "index"
   end
   private
    def set_category

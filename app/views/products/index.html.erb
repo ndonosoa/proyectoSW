@@ -1,34 +1,34 @@
 <%= render 'form'%>
-
 <section class="content invoice">
-<div>
-  <% @product.each do |t| %>
-     <%= form_for(t) do |f| %>
 
-      <%= label_tag 'Filtro' %>
-      <%= text_field(:product_name, :product) %>
-      <%= f.submit "Filtrar" %>
-     <%end%>
-  <%end%>
-
-</div>
 
   <table id="cities" class="display">
     <thead>
     <tr>
       <th>Nombre Producto</th>
+      <th>Nombre Proveedor</th>
       <th>Nombre Marca</th>
       <th>Nombre categoria</th>
+      <th>Precio Producto</th>
+      <th>Stock Producto</th>
     </tr>
     </thead>
     <tbody>
-    <% @productfiltro.each do |products| %>
-        <tr>
-          <td><%= products.product_name %></td>
-          <td><%= products.brand.brand_name%></td>
-          <td><%= products.category.category_name%></td>
-        </tr>
-    <%end%>
+        <% @product.each do |products| %>
+          <tr>
+                <td><%= link_to(products.product_name, products) %> </td>
+                <td><%= link_to(products.provider.provider_name, products.provider, method: :get)%></td>
+                <td><%= products.brand.brand_name %></td>
+                <td><%= products.category.category_name %></td>
+                <td><% @precioactual.each do |r| %>
+                  <% if r.product_id == products.id %>
+                    <%= r.actual_price %>
+                  <%end%>
+                 <%end%> </td>  
+                <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  <%= link_to 'Eliminar',products , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
+          </tr>
+        <%end%>
     </tbody>
   </table>
 </section>
