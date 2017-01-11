@@ -14,20 +14,24 @@
     </tr>
     </thead>
     <tbody>
+
         <% @product.each do |products| %>
+        <% if products.product_state == 1 %>
           <tr>
                 <td><%= link_to(products.product_name, products) %> </td>
                 <td><%= link_to(products.provider.provider_name, products.provider, method: :get)%></td>
                 <td><%= products.brand.brand_name %></td>
                 <td><%= products.category.category_name %></td>
-                <td><% @precioactual.each do |r| %>
-                  <% if r.product_id == products.id %>
-                    <%= r.actual_price %>
+                <td><% Price.find_each() do |r|
+                        Price.where("price_state = ?", params[price_state = 1])%>
+                        <% if r.product_id == products.id %>
+                          <%= r.actual_price %>
                   <%end%>
-                 <%end%> </td>  
+                 <%end%> </td>
                 <td><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                   <%= link_to 'Eliminar',products , method: :delete, data: {confirm: 'Esta seguro?'} %> </td>
           </tr>
+        <%end%>
         <%end%>
     </tbody>
   </table>

@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 20170108194722) do
     t.integer  "city_id"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.string   "provider_address"
     t.integer  "region_id"
+    t.string   "provider_address"
     t.index ["city_id"], name: "index_providers_on_city_id", using: :btree
     t.index ["region_id"], name: "index_providers_on_region_id", using: :btree
   end
@@ -149,5 +149,6 @@ ActiveRecord::Schema.define(version: 20170108194722) do
   add_foreign_key "purchase_details", "products"
   add_foreign_key "purchase_details", "purchases"
   add_foreign_key "purchases", "providers"
+  add_foreign_key "purchases", "users"
   add_foreign_key "stocks", "products"
 end

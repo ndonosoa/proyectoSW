@@ -3,8 +3,9 @@ class ProductsController < ApplicationController
   def index
     @product = Product.all
     @product.each do |a|
-      @precioactual = Price.where(product_id: a.id, price_state: 1)
-    end  
+      Product.where(price_state: 1)
+      Product.joins(:prices).where(prices: { price_state: 1 })
+    end
   end
   def show
 
@@ -30,11 +31,11 @@ class ProductsController < ApplicationController
         if @precio.save
             redirect_to :action => 'index'
         else
-         render 'new' 
-        end    
+         render 'new'
+        end
     else
-     render 'new' 
-    end    
+     render 'new'
+    end
 
   end
 
