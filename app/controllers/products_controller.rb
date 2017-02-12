@@ -1,17 +1,34 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: [:destroy, :show, :update]
+  respond_to :json
   def index
     @product = Product.all
-    @product.each do |a|
-      Product.where(price_state: 1)
-      Product.joins(:prices).where(prices: { price_state: 1 })
-    end
+    @prices = Price.where(price_state: '1')
   end
   def show
 
   end
 
+  def edit   
+  end
   def update
+    @product.update(product_params)
+    if params[:asd] != nil
+      precioantiguo = Price.find_by(product_id: @product.id,price_state: '1')
+      precioantiguo.update(price_state: '0')
+      precioantiguo.save
+      @price = Price.new(product_id: params[:id], actual_price: params[:asd], price_state: '1')
+      @price.save
+    end  
+     if @product.save
+          redirect_to :action => "index" 
+      else
+       redirect_to :action => "index"      
+     end
+  end
+
+  def obj_producto
+    @productjs = Product.all
+    redirect_to :action => "index"
   end
 
   def destroy
@@ -42,9 +59,9 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
   end
-  def set_product
-      @product = Product.find(params[:id])
-   end
+
+
+
   def product_params
      params.require(:product).permit(:product_name,:brand_id,:category_id,:product_code,:provider_id,:product_state)
    end

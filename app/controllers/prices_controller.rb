@@ -1,4 +1,5 @@
 class PricesController < ApplicationController
+  before_action :set_price, only: [:show, :destroy, :update]
   def index
   end
 
@@ -20,6 +21,9 @@ class PricesController < ApplicationController
   end
 
   def delete
+  end
+  def set_price
+    @price = Price.find(params[:id])
   end
 
   def price_params

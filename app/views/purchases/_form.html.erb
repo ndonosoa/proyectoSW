@@ -1,49 +1,46 @@
-<%= render 'form'%>
-<section class="content invoice">
-
-
-  <table id="cities" class="display">
+<%= render 'form2' %>
+<table id="cities" class="display">
     <thead>
     <tr>
       <th>Nombre Producto</th>
-      <th>Nombre Proveedor</th>
       <th>Nombre Marca</th>
-      <th>Nombre categoria</th>
-      <th>Precio Producto</th>
+      <th>Nombre categoria</th>    
+      <th>Precio Producto(unitario)</th>
+      <th>Cantidad</th>
+      <th>Subtotal</th>
       <th>Stock Producto</th>
       <th>Editar Producto </th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
 
-        <% @product.each do |products| %>
+        <% @purchases.each do |products| %>
         <% if products.product_state == 1 %>
           <tr>
                 <td><%= link_to(products.product_name, products) %> </td>
-                <td><%= link_to(products.provider.provider_name, products.provider, method: :get)%></td>
                 <td><%= products.brand.brand_name %></td>
                 <td><%= products.category.category_name %></td>
                 <td>
-                        <% @prices.each do |price| %>
+                        <% @prices1.each do |price| %>
                             <% if products.id == price.product_id %>
 
                               <%= price.actual_price %>
                             <%end%>
                         <%end%>
-                 </td>
+                 </td> 
+              <%= form_for @ordenes do |f| %> 
+                <td> <%= f.text_field :purchase_price %></td>
+                <td> <%= f.text_field :purchase_quantity %></td>
                 <% asd = Stock.find_by(product_id: products.id) %>
                 <td> <%= asd.actual_stock %></td>
+                <%end%>
                   <td>
                     <%= link_to 'Editar', edit_product_path(products) %>
                   </td>
+                  <td> <%= check_box_tag 'asd' %></td>
           </tr>
         <%end%>
       <%end%>
     </tbody>
-    <tfoot>
-    <td>
-    <%= link_to 'Generar Orden de compra', new_purchase_path, method: :get %>
-    </td>
-    </tfoot>
   </table>
-</section>

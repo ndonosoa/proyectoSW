@@ -14,7 +14,7 @@
       <ul class="nav navbar-nav">
       <% if @conectado == 1 %>
             <li>
-              <a href="#" id="asd">Productos</a>
+              <%= link_to "Productos", products_path, method: :get %>
             </li>
 
             <li>
