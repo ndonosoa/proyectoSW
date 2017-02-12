@@ -1,5 +1,5 @@
 class ProvidersController < ApplicationController
-  before_action :set_provider, only: [:show, :destroy, :update]
+  before_action :set_provider, only: [:show, :destroy, :update, :edit]
   def index
     @provider = Provider.all
   end
@@ -22,6 +22,10 @@ class ProvidersController < ApplicationController
   end
 
   def update
+    if @provider.update(provider_params)
+      redirect_to :action => "index"
+    end
+    
   end
 
   def destroy

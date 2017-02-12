@@ -21,16 +21,16 @@
             <%= f.text_field :product_name %>
           </div>
           <div class="form-group">
-            <%= f.label "Ingrese estado del producto" %>
-            <%= f.text_field :product_state %>
-          </div>
-          <div class="form-group">
             <%= f.label "Ingrese codigo del producto" %>
             <%= f.text_field :product_code %>
           </div>
           <div class="form-group">
             <%= label_tag 'Ingrese Precio del producto' %>
-            <%= text_field_tag :asd%>
+            <%= text_field_tag :price, nil%>
+          </div>
+          <div class="form-group">
+            <%= label_tag 'Ingrese Stock del producto' %>
+            <%= text_field_tag :stock%>
           </div>
           <div class="field">
     	   			<%= f.submit "Guardar"%>

@@ -13,3 +13,4 @@ jQuery ->
     else
       $('#provider_city_id').empty()
       $('#provider_city_id').parent().hide()
+
