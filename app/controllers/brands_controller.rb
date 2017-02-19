@@ -1,42 +1,42 @@
 class BrandsController < ApplicationController
-  before_action :set_brand, only: [:destroy, :update, :show]
-  def index
-    @brand = Brand.all
-  end
+	#before_action :set_brand, only: [:destroy, :edit]
 
-  def new
-    @brand = Brand.new
-  end
+	def index
+	end
 
-  def edit
-  end
+	def getbrands
+		list = Brand.all      
+		render json: {
+			brand: list
+			}.to_json	
+	end
 
-  def update
-  end
+	def destroy
+		@brand = Brand.find(params[:id])
+		@brand.destroy
+	end
 
-  def destroy
-    @brand.destroy
-    redirect_to :action => "index"
-  end
+	def edit
+		brand = Brand.find(params[:id])
+			render json: {
+				brand: brand
+				}.to_json
+	end
 
-  def show
-  end
+	def update
+		@brand = Brand.update(brand_params)
+	end
 
-  def create
-    @brand = Brand.new(brand_params)
-    if @brand.save
-      redirect_to :action => "index"
-    else
-      render :new
-    end
-  end
+	def create
+		@brand = Brand.new(brand_params)
 
-  private
-    def set_brand
-      @brand = Brand.find(params[:id])
-    end
+		@brand.save
 
-    def brand_params
-      params.require(:brand).permit(:brand_name)
-    end
+	end
+
+	def brand_params
+		params.require(:brand).permit(:name_brand)
+	end
+
 end
+

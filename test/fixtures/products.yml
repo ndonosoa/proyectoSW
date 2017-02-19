@@ -1,11 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  product_name: MyString
-  product_state: 1
-  provider: one
+  name_product: MyString
+  brand: one
 
 two:
-  product_name: MyString
-  product_state: 1
-  provider: two
+  name_product: MyString
+  brand: two

@@ -1,21 +1,33 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :controllers => {:registrations => "users/registrations"}
-  resources :brands
-	resources :regions
-  resources :products
-  resources :users
-  resources :providers
-  resources :cities
-  resources :categories
-  resources :homes
-  resources :prices
-  resources :stocks
-  resources :purchases
-  resources :purchase_details
 
-root 'home#index'
+
+=begin  get 'regions', to:'regions#index'
   
+  get '/regions/:id/edit', to: 'regions#editar'
+=end 
+  get '/regions/json/getregions', to: 'regions#getregions'
+  resources :regions
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-end
+  #Product Routes
+	get '/products/json/getproducts', to: 'products#asd'
+	get '/products', to: 'products#index'
 
+
+  #Brand Routes
+  		get '/brands/json/getbrands', to: 'brands#getbrands'
+  		resources :brands
+
+  #Category Routes
+      get '/categories/json/getcategories', to: 'categories#getcategories'
+      resources :categories
+
+  #Provider Routes
+      get '/providers/json/getproviders', to: 'providers#getproviders'
+      get '/providers/json/getcities', to: 'providers#getcities'
+      resources :providers
+
+  #Rutas comuna
+      get '/comunas/json/getcomunas', to: 'comunas#getcomunas'
+      resources :comunas
+end

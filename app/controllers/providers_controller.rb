@@ -1,42 +1,55 @@
 class ProvidersController < ApplicationController
-  before_action :set_provider, only: [:show, :destroy, :update, :edit]
-  def index
-    @provider = Provider.all
-  end
+#before_action :set_provider, only: [:destroy, :edit]
 
-  def show
-  end
-  def edit
-  end
-  def new
-    @provider = Provider.new
-  end
+	def index
+	end
 
-  def create
-    @provider = Provider.new(provider_params)
-    if @provider.save
-      redirect_to :action => "index"
-    else
-      render :new
-    end
-  end
+	def getproviders
+		sql = "SELECT p.id, p.rut_provider, p.name_provider,
+			 	p.phone_provider, p.email_provider, c.name_city 
+				FROM providers p 
+				INNER JOIN cities c ON (c.id = p.city_id) "
 
-  def update
-    if @provider.update(provider_params)
-      redirect_to :action => "index"
-    end
-    
-  end
+   list = ActiveRecord::Base.connection.execute(sql)       
+    render json: {
+      provider: list
+    }.to_json		
+	end
 
-  def destroy
-  end
+	def getcities
+		list = City.all
+		render json: {
+			cities: list
+		}.to_json		
+	end
 
-  private
-  def set_provider
-    @provider = Provider.find(params[:id])
-  end
-  def provider_params
-    params.require(:provider).permit(:provider_name,:provider_rut,:provider_email,:provider_address,:provider_tel,
-                                      :city_id,:region_id)
-  end
+	def destroy
+		@provider = Provider.find(params[:id])
+		@provider.destroy
+	end
+
+	def edit
+		provider = Provider.find(params[:id])
+			render json: {
+				provider: provider
+				}.to_json
+	end
+
+	def update
+		a = Provider.find(params[:id])
+		a.update(provider_params)
+	end
+
+	def create
+		@provider = Provider.new(provider_params)
+		@provider.city_id = 1
+		@provider.state_provider = 1
+		@provider.save
+
+	end
+
+	def provider_params
+		params.require(:provider).permit(:name_provider,:rut_provider,:email_provider,:phone_provider)
+	end
+
 end

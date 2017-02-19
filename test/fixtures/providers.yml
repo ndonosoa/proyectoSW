@@ -1,15 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  provider_name: MyString
-  provider_rut: MyString
-  provider_tel: MyString
-  provider_email: MyString
+  rut_provider: MyString
+  name_provider: MyString
+  phone_provider: MyString
+  email_provider: MyString
+  state_provider: MyString
   city: one
 
 two:
-  provider_name: MyString
-  provider_rut: MyString
-  provider_tel: MyString
-  provider_email: MyString
+  rut_provider: MyString
+  name_provider: MyString
+  phone_provider: MyString
+  email_provider: MyString
+  state_provider: MyString
   city: two

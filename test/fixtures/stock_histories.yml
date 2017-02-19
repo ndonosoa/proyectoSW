@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price_stock_history: 1
+  quantity_stock_history: MyString
+  product: one
+
+two:
+  price_stock_history: 1
+  quantity_stock_history: MyString
+  product: two
