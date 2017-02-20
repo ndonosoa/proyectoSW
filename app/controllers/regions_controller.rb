@@ -34,7 +34,7 @@ def create
     @region = Region.new(region_params)
    if @region.save
    else
-      format.json { render :json => { :error => @region.errors.full_messages }, :status => 422 }
+      render :json => { :errors => @region.errors }, :status => 422
     end
   end
 

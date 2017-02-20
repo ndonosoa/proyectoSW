@@ -1,3 +1,3 @@
 class Provider < ApplicationRecord
-  belongs_to :city
+  belongs_to :comuna
 end

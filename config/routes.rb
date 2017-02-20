@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   get '/regions/:id/edit', to: 'regions#editar'
 =end 
   get '/regions/json/getregions', to: 'regions#getregions'
+  get '/regions/json/geterrorregions', to: 'regions#create'
   resources :regions
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #Product Routes
 	get '/products/json/getproducts', to: 'products#asd'
-	get '/products', to: 'products#index'
+	resources :products
 
 
   #Brand Routes
@@ -30,4 +31,7 @@ Rails.application.routes.draw do
   #Rutas comuna
       get '/comunas/json/getcomunas', to: 'comunas#getcomunas'
       resources :comunas
+
+  #Purchases Routes
+      resources :purchases
 end

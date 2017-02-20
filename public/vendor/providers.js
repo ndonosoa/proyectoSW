@@ -7,7 +7,7 @@ $(function () {
         {"data":"name_provider"},
         {"data":"phone_provider"},
         {"data":"email_provider"},
-        {"data":"name_city"},           
+        {"data":"nombre_comuna"},           
         { "data": "id", 
         "sClass": "text-center","orderable": false,"searchable": false,
            "render": function(data,type,row,meta){
@@ -72,6 +72,7 @@ $('#nombre_provider_form').val(result.provider.name_provider).animateCss('fadeIn
 $('#rut_provider_form').val(result.provider.rut_provider).animateCss('fadeIn');
 $('#phone_provider_form').val(result.provider.phone_provider).animateCss('fadeIn');
 $('#email_provider_form').val(result.provider.email_provider).animateCss('fadeIn');
+$('#comuna_provider_form').val(result.provider.comuna_id).animateCss('fadeIn');
 
 });   
 $('#form_tipo').val('2'); //tipo 2 para editar

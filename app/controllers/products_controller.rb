@@ -1,12 +1,13 @@
 class ProductsController < ApplicationController
 
 def index
-	@product = Product.all
-
+	@providers = Provider.all
+  @brands = Brand.all
+  @categories = Category.all
 end
 
 def asd
- sql = "select p.id, p.name_product, b.name_brand, c.name_category, a.name_provider 
+ sql = "select p.id, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
   from products p 
   inner join brands b on (b.id = p.brand_id) 
   inner join categories c on (c.id = p.category_id)
@@ -17,4 +18,29 @@ def asd
       productos: list
     }.to_json	
 end
+
+
+def edit
+    product = Product.find(params[:id])
+      render json: {
+        product: product
+        }.to_json
+end
+
+def update
+    a = Product.find(params[:id])
+    a.update(product_params)
+end
+
+def create
+  @product = Product.new(product_params)
+ # @price = Stock_History.new()
+  @product.save
+end
+
+def product_params
+    params.require(:product).permit(:name_product,
+      :code_product,:brand_id,:category_id, :provider_id)
+end
+
 end

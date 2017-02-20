@@ -62,7 +62,7 @@ $(document).on('click', '.modal_editar', function (e){
   $('#form-registro')[0].reset();
   $.get("comunas/"+$(this).data('id')+"/edit")
   .done(function(result){ 
-console.log(result.comuna.region_id);
+console.log(result);
 $('#nombre_comuna_form').val(result.comuna.nombre_comuna).animateCss('fadeIn');
 $('#region_id_form').val(result.comuna.region_id).animateCss('fadeIn');
 });   

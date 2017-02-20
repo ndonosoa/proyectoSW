@@ -2,13 +2,14 @@ class ProvidersController < ApplicationController
 #before_action :set_provider, only: [:destroy, :edit]
 
 	def index
+		@comunas = Comuna.all
 	end
 
 	def getproviders
 		sql = "SELECT p.id, p.rut_provider, p.name_provider,
-			 	p.phone_provider, p.email_provider, c.name_city 
+			 	p.phone_provider, p.email_provider, c.nombre_comuna 
 				FROM providers p 
-				INNER JOIN cities c ON (c.id = p.city_id) "
+				INNER JOIN comunas c ON (c.id = p.comuna_id) "
 
    list = ActiveRecord::Base.connection.execute(sql)       
     render json: {
@@ -16,10 +17,10 @@ class ProvidersController < ApplicationController
     }.to_json		
 	end
 
-	def getcities
-		list = City.all
+	def getcomunas
+		list = Comuna.all
 		render json: {
-			cities: list
+			comunas: list
 		}.to_json		
 	end
 
@@ -42,14 +43,13 @@ class ProvidersController < ApplicationController
 
 	def create
 		@provider = Provider.new(provider_params)
-		@provider.city_id = 1
 		@provider.state_provider = 1
 		@provider.save
 
 	end
 
 	def provider_params
-		params.require(:provider).permit(:name_provider,:rut_provider,:email_provider,:phone_provider)
+		params.require(:provider).permit(:name_provider,:rut_provider,:email_provider,:phone_provider, :comuna_id)
 	end
 
 end
