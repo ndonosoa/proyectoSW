@@ -27,7 +27,7 @@
 <% content_for :js do%>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="/vendor/providers.js">     
+<script src="/vendor/providers.js">
 </script>
 <%end%>
 
@@ -45,32 +45,31 @@
     						<input type="hidden" id="form_method" name="_method" value="patch">
     						<input type="hidden" id="form_tipo" name="form_tipo">
     						<input type="hidden" id="form_id_model" name="form_id_model">
-
-    						<div class="form-group">
+								<div class="form-group">
     							<label class="col-sm-2 control-label">Rut</label>
     							<div class="col-sm-10">
-    								<input id="rut_provider_form" name="provider[rut_provider]" type="text" class="form-control" autocomplete="off">
+    								<input id="rut_provider_form" name="provider[rut_provider]" type="text" class="form-control" required="required" pattern="\d{3,8}-[\d|kK]{1}" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Debe ser un Rut válido"/>
     								<span id="error_rut_provider" class="help-block text-danger"></span>
     							</div>
-    						</div>
+								</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">Nombre</label>
     							<div class="col-sm-10">
-    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" class="form-control" autocomplete="off">
+    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" required class="form-control" autocomplete="off"
     								<span id="error_nombre_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">Teléfono</label>
     							<div class="col-sm-10">
-    								<input id="phone_provider_form" name="provider[phone_provider]" type="text" class="form-control" autocomplete="off">
-    								<span id="error_telefono_provider" class="help-block text-danger"></span>
+    								<input id="phone_provider_form" name="provider[phone_provider]" type="text" required pattern="^[9|8|7|2]\d{8}$" class="form-control" autocomplete="off" placeholder="Telefono de 9 digitos">
+										<span id="error_telefono_provider" class="help-block text-danger"></span>
     							</div>
-    						</div>    						
+    						</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">eMail</label>
     							<div class="col-sm-10">
-    								<input id="email_provider_form" name="provider[email_provider]" type="text" class="form-control" autocomplete="off">
+    								<input type="email" id="email_provider_form" name="provider[email_provider]" placeholder="Ingrese su email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required class="form-control" autocomplete="off">
     								<span id="error_email_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
@@ -80,7 +79,7 @@
                                     <select name="provider[comuna_id]" id="comuna_provider_form" class="form-control m-b">
                                      <% @comunas.each do |comuna| %>
                                         <option value="<%=comuna.id%>"><%= comuna.nombre_comuna%></option>
-                                     <%end%>   
+                                     <%end%>
 
                                     </select>
                                     <span id="error_nombre_comuna" class="help-block text-danger"></span>
@@ -96,7 +95,7 @@
     			</div>
     		</div>
     	</div>
-    </div>  
+    </div>
 <form action="providers/:campo_id" id="form_delete" method="post">
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
     <input type="hidden" name="_method" value="delete">

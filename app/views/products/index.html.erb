@@ -25,7 +25,7 @@
 <% content_for :js do%>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="/vendor/products.js">     
+<script src="/vendor/products.js">
 </script>
 <%end%>
 
@@ -40,27 +40,27 @@
             <div class="modal-body">
               <form id="form-registro" action="products" method="post" class="form-horizontal">
                 <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
-                <input type="hidden" id="form_method" name="_method" value="patch">
+                <input type="hidden" id="form_method" name="_method"  value="patch">
                 <input type="hidden" id="form_tipo" name="form_tipo">
-                <input type="hidden" id="form_id_model" name="form_id_model">               
+                <input type="hidden" id="form_id_model" name="form_id_model">
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Nombre</label>
                   <div class="col-sm-10">
-                    <input id="nombre_product_form" name="product[name_product]" type="text" class="form-control" autocomplete="off">
+                    <input id="nombre_product_form" name="product[name_product]" type="text" required class="form-control" autocomplete="off">
                     <span id="error_nombre_product" class="help-block text-danger"></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Código</label>
                   <div class="col-sm-10">
-                    <input id="code_product_form" name="product[code_product]" type="text" class="form-control" autocomplete="off">
+                    <input id="code_product_form" name="product[code_product]" type="text" pattern="^([0-9]){5,13}$"  required class="form-control" autocomplete="off">
                     <span id="error_nombre_product" class="help-block text-danger"></span>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Precio</label>
                   <div class="col-sm-10">
-                    <input id="price_product_form" name="product[price_product]" type="text" class="form-control" autocomplete="off">
+                    <input type="text" pattern="^([0-9]){1,8}$" id="price_product_form" name="product[price_product]" type="text" required class="form-control" autocomplete="off">
                     <span id="error_price_product" class="help-block text-danger"></span>
                   </div>
                 </div>
@@ -70,11 +70,11 @@
                     <select name="product[provider_id]" id="provider_id_form" class="form-control m-b">
                      <% @providers.each do |provider| %>
                      <option value="<%=provider.id%>"><%= provider.name_provider%></option>
-                     <%end%>   
+                     <%end%>
                    </select>
                    <span id="error_nombre_product" class="help-block text-danger"></span>
                  </div>
-               
+
                </div>
                <div class="form-group">
                 <label class="col-sm-2 control-label">Categoria</label>
@@ -82,11 +82,11 @@
                   <select name="product[category_id]" id="category_id_form" class="form-control m-b">
                    <% @categories.each do |category| %>
                    <option value="<%=category.id%>"><%= category.name_category%></option>
-                   <%end%>   
+                   <%end%>
                  </select>
                  <span id="error_category_product" class="help-block text-danger"></span>
                </div>
-            
+
              </div>
              <div class="form-group">
               <label class="col-sm-2 control-label">Marca</label>
@@ -94,13 +94,13 @@
                 <select name="product[brand_id]" id="brand_id_form" class="form-control m-b">
                  <% @brands.each do |brand| %>
                  <option value="<%=brand.id%>"><%= brand.name_brand%></option>
-                 <%end%>   
+                 <%end%>
 
                </select>
                <span id="error_brand_product" class="help-block text-danger"></span>
              </div>
            </div>
-                
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"  style="margin-right:20px;">Cancelar</button>
                 <button type="submit" class="btn btn-primary">Guardar</button>
@@ -109,9 +109,8 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
 <form action="products/:campo_id" id="form_delete" method="post">
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
     <input type="hidden" name="_method" value="delete">
 </form>
-

@@ -27,14 +27,6 @@ ActiveRecord::Schema.define(version: 20170220042314) do
     t.datetime "updated_at",    null: false
   end
 
-  create_table "cities", force: :cascade do |t|
-    t.string   "name_city"
-    t.integer  "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["region_id"], name: "index_cities_on_region_id", using: :btree
-  end
-
   create_table "comunas", force: :cascade do |t|
     t.string   "nombre_comuna"
     t.integer  "region_id"
@@ -69,8 +61,8 @@ ActiveRecord::Schema.define(version: 20170220042314) do
     t.integer  "provider_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "code_product"
     t.integer  "price_product"
+    t.string   "code_product"
     t.index ["brand_id"], name: "index_products_on_brand_id", using: :btree
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
     t.index ["provider_id"], name: "index_products_on_provider_id", using: :btree
@@ -153,7 +145,6 @@ ActiveRecord::Schema.define(version: 20170220042314) do
     t.index ["user_type_id"], name: "index_users_on_user_type_id", using: :btree
   end
 
-  add_foreign_key "cities", "regions"
   add_foreign_key "comunas", "regions"
   add_foreign_key "permissions", "user_types"
   add_foreign_key "product_providers", "products"
