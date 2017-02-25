@@ -6,7 +6,6 @@ class CreateProviders < ActiveRecord::Migration[5.0]
       t.string :phone_provider
       t.string :email_provider
       t.integer :state_provider
-      t.references :city, foreign_key: true
 
       t.timestamps
     end

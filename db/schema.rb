@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20170225125556) do
     t.integer  "provider_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.string   "code_product"
     t.integer  "price_product"
+    t.string   "code_product"
     t.index ["brand_id"], name: "index_products_on_brand_id", using: :btree
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
     t.index ["provider_id"], name: "index_products_on_provider_id", using: :btree
