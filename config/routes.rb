@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
 
-
 =begin  get 'regions', to:'regions#index'
   
   get '/regions/:id/edit', to: 'regions#editar'
@@ -34,4 +33,16 @@ Rails.application.routes.draw do
 
   #Purchases Routes
       resources :purchases
+
+  #Users routes
+      get '/users/json/getusers', to: 'users#getusers'
+      resources :users
+
+  #Login Routes
+       get '/login', to: 'sessions#new'
+       post '/login', to: 'sessions#create'
+       get '/logout', to: 'sessions#destroy'
+
+  #Home route
+  root 'home#index'
 end

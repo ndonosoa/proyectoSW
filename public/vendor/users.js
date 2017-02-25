@@ -1,10 +1,11 @@
 $(function () {
   $('#datatables').dataTable({
-     "ajax": "/regions/json/getregions",
-     "sAjaxDataProp": "region",
+     "ajax": "/users/json/getusers",
+     "sAjaxDataProp": "user",
      "columns": [
-        {"data":"odeplan_region"},
-        {"data":"name_region"},           
+        {"data":"name_user"},
+        {"data":"rut_user"},
+        {"data":"email_user"},           
         { "data": "id", 
         "sClass": "text-center","orderable": false,"searchable": false,
            "render": function(data,type,row,meta){
@@ -55,7 +56,7 @@ $(document).on('click', '#modal_nuevo', function (e){
 //abre el modal, limpia el bloque de texto (clase helpblock) resetea formulario 
 $(document).on('keypress', ':input', function(){
   var a = $(this).attr('name');
-  var res = a.replace("region[", "").replace("]", "");
+  var res = a.replace("user[", "").replace("]", "");
 
   $('#error_'+res).text('');
 });
@@ -65,11 +66,12 @@ $(document).on('click', '.modal_editar', function (e){
   $('.help-block').text('');
   $('#title_form').text('Modificar Región');
   $('#form-registro')[0].reset();
-  $.get("regions/"+$(this).data('id')+"/edit")
+  $.get("users/"+$(this).data('id')+"/edit")
   .done(function(result){ 
 //console.log(result);
-$('#odeplan_region_form').val(result.region.odeplan_region).animateCss('fadeIn');
-$('#nombre_region_form').val(result.region.name_region).animateCss('fadeIn');
+$('#name_user_form').val(result.user.name_user).animateCss('fadeIn');
+$('#rut_user_form').val(result.user.rut_user).animateCss('fadeIn');
+$('#email_user_form').val(result.user.email_user).animateCss('fadeIn');
 });   
 $('#form_tipo').val('2'); //tipo 2 para editar
 $('#form_id_model').val($(this).data('id')); 
@@ -103,14 +105,14 @@ $(function () {
       swal({ title: "Agregado", text: "Región agregada correctamente.", type: "success", timer: 1500 });
      }
       $('#datatables').DataTable().ajax.reload( null, false ); //cambiar cuando la tabla tenga màs de 500 registros o sea usada por màs de una persona
-      //t.row.add( { "odeplan_region":result.odeplan_region,"nombre_region":result.nombre_region, "id_region":result.id_region} ).draw(); //comentar si son màs de 500 registros
+      //t.row.add( { "odeplan_user":result.odeplan_user,"nombre_user":result.nombre_user, "id_user":result.id_user} ).draw(); //comentar si son màs de 500 registros
      }).error(function(xhr){
       //console.log(evt,xhr,status,error);
       var errors = $.parseJSON(xhr.responseText);
       //var e = error.responseJSON;
       //console.log(errors);
       $.each( errors, function( i,item ) {
-      //console.log(value[0], key, value.name_region[0], value.odeplan_region[0]);
+      //console.log(value[0], key, value.name_user[0], value.odeplan_user[0]);
       console.log(item);
           $.each( item, function( a,b) {
             $('#error_'+a).append(b).animateCss('fadeIn');

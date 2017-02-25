@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170220042314) do
+ActiveRecord::Schema.define(version: 20170225125556) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,30 +27,12 @@ ActiveRecord::Schema.define(version: 20170220042314) do
     t.datetime "updated_at",    null: false
   end
 
-  create_table "cities", force: :cascade do |t|
-    t.string   "name_city"
-    t.integer  "region_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["region_id"], name: "index_cities_on_region_id", using: :btree
-  end
-
   create_table "comunas", force: :cascade do |t|
     t.string   "nombre_comuna"
     t.integer  "region_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["region_id"], name: "index_comunas_on_region_id", using: :btree
-  end
-
-  create_table "permissions", force: :cascade do |t|
-    t.string   "model_permission"
-    t.string   "method_permission"
-    t.string   "state_permission"
-    t.integer  "user_type_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-    t.index ["user_type_id"], name: "index_permissions_on_user_type_id", using: :btree
   end
 
   create_table "product_providers", force: :cascade do |t|
@@ -134,28 +116,18 @@ ActiveRecord::Schema.define(version: 20170220042314) do
     t.index ["product_id"], name: "index_stocks_on_product_id", using: :btree
   end
 
-  create_table "user_types", force: :cascade do |t|
-    t.string   "name_user_type"
-    t.string   "description_user_type"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "name_user"
     t.string   "rut_user"
     t.string   "email_user"
     t.string   "password_user"
     t.integer  "state_user"
-    t.integer  "user_type_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.index ["user_type_id"], name: "index_users_on_user_type_id", using: :btree
+    t.integer  "type_user"
   end
 
-  add_foreign_key "cities", "regions"
   add_foreign_key "comunas", "regions"
-  add_foreign_key "permissions", "user_types"
   add_foreign_key "product_providers", "products"
   add_foreign_key "product_providers", "providers"
   add_foreign_key "products", "brands"
@@ -168,5 +140,4 @@ ActiveRecord::Schema.define(version: 20170220042314) do
   add_foreign_key "purchases", "users"
   add_foreign_key "stock_histories", "products"
   add_foreign_key "stocks", "products"
-  add_foreign_key "users", "user_types"
 end

@@ -7,7 +7,7 @@ def index
 end
 
 def asd
- sql = "select p.id, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
+ sql = "select p.id, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
   from products p 
   inner join brands b on (b.id = p.brand_id) 
   inner join categories c on (c.id = p.category_id)
@@ -39,7 +39,7 @@ def create
 end
 
 def product_params
-    params.require(:product).permit(:name_product,
+    params.require(:product).permit(:name_product, :price_product,
       :code_product,:brand_id,:category_id, :provider_id)
 end
 

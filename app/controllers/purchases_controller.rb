@@ -22,7 +22,6 @@ class PurchasesController < ApplicationController
 
 	def create
 		@provider = Provider.new(provider_params)
-		@provider.city_id = 1
 		@provider.state_provider = 1
 		@provider.save
 

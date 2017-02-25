@@ -22,6 +22,9 @@
         </div>
         <div class="navbar-right">
             <ul class="nav navbar-nav no-borders">
+            <% if !session[:current_user].blank? %>
+            <li><%= link_to "Desconectar", logout_path, method: :get %></li>
+            <%end%>
                 <!--
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#" data-toggle="dropdown">

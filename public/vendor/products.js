@@ -5,6 +5,7 @@ $(function () {
      "columns": [
         {"data":"name_product"},
         {"data":"code_product"},
+        {"data":"price_product"},
         {"data":"name_provider"},           
         {"data": "name_category" },
         {"data": "name_brand" },
@@ -69,9 +70,11 @@ $(document).on('click', '.modal_editar', function (e){
 console.log(result);
 $('#nombre_product_form').val(result.product.name_product).animateCss('fadeIn');
 $('#code_product_form').val(result.product.code_product).animateCss('fadeIn');
+$('#price_product_form').val(result.product.price_product).animateCss('fadeIn');
 $('#provider_id_form').val(result.product.provider_id).animateCss('fadeIn');
 $('#category_id_form').val(result.product.category_id).animateCss('fadeIn');
 $('#brand_id_form').val(result.product.brand_id).animateCss('fadeIn');
+
 });   
 $('#form_tipo').val('2'); //tipo 2 para editar
 $('#form_id_model').val($(this).data('id')); 
