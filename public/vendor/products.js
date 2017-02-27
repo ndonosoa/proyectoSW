@@ -1,23 +1,4 @@
-$(function () {
-  $('#datatables').dataTable({
-     "ajax": "/products/json/getproducts",
-     "sAjaxDataProp": "productos",
-     "columns": [
-        {"data":"name_product"},
-        {"data":"code_product"},
-        {"data":"price_product"},
-        {"data":"name_provider"},           
-        {"data": "name_category" },
-        {"data": "name_brand" },
-        { "data": "id", 
-        "sClass": "text-center","orderable": false,"searchable": false,
-           "render": function(data,type,row,meta){
-              return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>                                 <button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 hide_on_small revisar_ficha_big"><i class="fa fa-paste"></i></button>   <button title="Editar" class="btn btn-xs btn-info modal_editar hide_on_small" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger hide_on_small" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
-           }
-        } 
-     ],
-  });
-});
+
 
 
 $(document).on('click', '.eliminar_registro', function (e){
@@ -50,7 +31,7 @@ $.fn.extend({
 $(document).on('click', '#modal_nuevo', function (e){
   e.preventDefault();
   $('.help-block').text('');
-  $('#title_form').text('Agregar Región');
+  $('#title_form').text('Agregar Producto');
   $('#form-registro')[0].reset();
   $('#form_tipo').val('1'); 
   $('#modal_new_edit').modal('show');                
@@ -63,7 +44,7 @@ $(document).on('keypress', ':input', function(){
 $(document).on('click', '.modal_editar', function (e){
   e.preventDefault();
   $('.help-block').text('');
-  $('#title_form').text('Modificar Región');
+  $('#title_form').text('Modificar Producto');
   $('#form-registro')[0].reset();
   $.get("products/"+$(this).data('id')+"/edit")
   .done(function(result){ 
@@ -103,9 +84,9 @@ $(function () {
         $('#modal_new_edit').modal('hide');                
         if(f_t == 2){ 
       //$("#datatables").DataTable().row('#'+id_model).remove().draw(); //comentar si son màs de 500 registros
-        swal({ title: "Modificado", text: "Región modificada correctamente.", type: "success", timer: 1500 });
+        swal({ title: "Modificado", text: "Producto modificada correctamente.", type: "success", timer: 1500 });
      }else{
-      swal({ title: "Agregado", text: "Región agregada correctamente.", type: "success", timer: 1500 });
+      swal({ title: "Agregado", text: "Producto agregada correctamente.", type: "success", timer: 1500 });
      }
       $('#datatables').DataTable().ajax.reload( null, false ); //cambiar cuando la tabla tenga màs de 500 registros o sea usada por màs de una persona
       //t.row.add( { "odeplan_product":result.odeplan_product,"nombre_product":result.nombre_product, "id_product":result.id_product} ).draw(); //comentar si son màs de 500 registros

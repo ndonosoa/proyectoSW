@@ -1,64 +1,157 @@
-<div id="contenedor_principal" class="row">
-	<div class="col-lg-12">
 
-		<div id="contenedor_producto" class="hpanel ">
-			<div class="panel-body  card-box">
-				<button title="Agregar nuevo Cliente" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nuevo</button>
-				<br><br>
-				<table id="productos" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th>Código</th>
-							<th>Categoria</th>
-							<th>Marca</th>
-							<th>Cantidad</th>
-							<th style="width:15%;">Acción</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</div>
-		<div id="contenedor_orden" class="hpanel ">
-			<div class="panel-body  card-box">
-				<button title="Agregar nuevo Cliente" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nuevo</button>
-				<br><br>
-				<table id="orden_compra" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
-					<thead>
-						<tr>
-							<th>Nombre</th>
-							<th style="width:15%;">Acción</th>
-						</tr>
-					</thead>
-				</table>
-			</div>
-		</div>
+<div id="contenedor_proveedores" class="hpanel">
+  <div class="panel-body  card-box">
+    <div class="row">
+      <div class="col-lg-9">
+        <select name="purchase[proveedor_id]" id="proveedor_id_form" class="form-control m-b">
+         <% @providers.each do |provider| %>
+         <option value="<%=provider.id%>"><%= provider.name_provider%></option>
+         <%end%>   
+       </select></div>
+       <div class="col-lg-3">
+        <button id="btn_filtrar_proveedor" class="btn btn-info">Filtrar</button>
+      </div>
+    </div>    
+  </div>
+</div>
 
-	</div>
+<div id="contenedor_principal" class="row hide" >
+  <div class="col-lg-12">
+    <div id="contenedor_datos" class="hpanel">   
+      <div class="panel-body  card-box" id="productos">
+        <button id="btn_mostrar_filtro" class="btn btn-info">Volver</button>
+        <br><br>
+        <table id="datatables_producto" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Código</th>
+              <th>Proveedor</th>
+              <th>Categoria</th>
+              <th>Marca</th>
+              <th style="width:15%;">Acción</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="panel-body  card-box" id="ordenes">
+        <br><br>
+        <table id="datatables_orden" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Stock</th>             
+              <th>Cantidad</th>
+              <th>Precio Unitario</th>
+              <th>Subtotal</th>
+              <th style="width:15%;">Acción</th>
+            </tr>
+          </thead>
+        </table>
+        <button class="btn btn-info" id="btn_revisar_ordenes">Revisar Ordenes de Compra</button>
+      </div>
+    </div>
+
+  </div>
 </div>
+
+<%# %>
+<div class="content animate-panel hide" id="detalle_ordenes" >
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="hpanel">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h4>Invoice <small>IN-9177283-2016</small></h4>
+            </div>
+            <div class="col-md-6">
+              <div class="text-right">
+
+
+                <button class="btn btn-primary btn-sm" id="btn_volver_ordenes"> Volver</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="panel-body p-xl">
+          <div class="row m-b-xl">
+            <div class="col-sm-6">
+              <h4>IN-9177283-2016</h4>
+
+              <address>
+                <strong>Homer, Inc.</strong><br>
+                30 Mortensen Avenue<br>
+                Salinas, CA 93905<br>
+                <abbr title="Phone">P:</abbr> (831) 758-7200
+              </address>
+            </div>
+            <div class="col-sm-6 text-right">
+              <span>To:</span>
+              <address>
+                <strong>Corporate, Inc.</strong><br>
+                60 Mortensen Avenue<br>
+                Salinas, CA 123343<br>
+                <abbr title="Phone">P:</abbr> (831) 752-7000
+              </address>
+              <p>
+                <span><strong>Invoice Date:</strong> May 16, 2016</span><br>
+                <span><strong>Due Date:</strong> May 24, 2016</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="table-responsive m-t">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="preview_orden_detalle">
+              </tbody>
+            </table>
+          </div>
+          <div class="row m-t">
+            <div class="col-md-4 col-md-offset-8">
+              <table class="table table-striped text-right">
+                <tbody>
+                  <tr>
+                    <td><strong>TOTAL :</strong></td>
+                    <td id="precio_total"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
 </div>
-</div>
+
+
+
+
 <% content_for :js do%>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="/vendor/brands.js">     
+<script src="/vendor/purchases.js">
 </script>
 <%end%>
 
-<script>$(function () {
-  $('#datatables').dataTable({
-     "ajax": "/regions/json/getregions",
-     "sAjaxDataProp": "region",
-     "columns": [
-        {"data":"odeplan_region"},
-        {"data":"name_region"},           
-        { "data": "id", 
-        "sClass": "text-center","orderable": false,"searchable": false,
-           "render": function(data,type,row,meta){
-              return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>                                 <button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>   <button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
-           }
-        } 
-     ],
-  });
-}); 
-</script>     

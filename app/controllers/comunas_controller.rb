@@ -37,8 +37,10 @@ end
 
 def create
     @comuna = Comuna.new(comuna_params)
-    @comuna.save
-
+   if @comuna.save
+   else
+      render :json => { :errors => @comuna.errors }, :status => 422
+    end
   end
 
 

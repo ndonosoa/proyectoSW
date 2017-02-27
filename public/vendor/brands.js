@@ -51,7 +51,10 @@ $(document).on('click', '#modal_nuevo', function (e){
 });  
 //abre el modal, limpia el bloque de texto (clase helpblock) resetea formulario 
 $(document).on('keypress', ':input', function(){
-  $('#error_'+$(this).attr('name')).text('');
+  var a = $(this).attr('name');
+  var res = a.replace("brand[", "").replace("]", "");
+
+  $('#error_'+res).text('');
 });
 
 $(document).on('click', '.modal_editar', function (e){
@@ -98,12 +101,21 @@ $(function () {
      }
       $('#datatables').DataTable().ajax.reload( null, false ); //cambiar cuando la tabla tenga màs de 500 registros o sea usada por màs de una persona
       //t.row.add( { "odeplan_brand":result.odeplan_brand,"nombre_brand":result.nombre_brand, "id_brand":result.id_brand} ).draw(); //comentar si son màs de 500 registros
-     }).fail(function(error, status){
-      //console.log(error);
-      var e = error.responseJSON;
-      $.each( e, function( key, value ) {
-      //console.log(key, value[0]);
-      $('#error_'+key).append(value[0]).animateCss('fadeIn');
+     }).error(function(xhr){
+      //console.log(evt,xhr,status,error);
+      var errors = $.parseJSON(xhr.responseText);
+      //var e = error.responseJSON;
+      //console.log(errors);
+      $.each( errors, function( i,item ) {
+      //console.log(value[0], key, value.name_region[0], value.odeplan_region[0]);
+      console.log(item);
+          $.each( item, function( a,b) {
+            $('#error_'+a).append(b).animateCss('fadeIn');
+            //console.log(a);
+            //console.log(b);
+            console.log('#error_'+a);
+          });
+      //$('#error_'+key).append(value[0]).animateCss('fadeIn');
       });
       if(f_t == 2){
         //swal({ title: 'Error!', text: 'El registro no pudo ser modificado.', type: "error", timer: 1500 });
@@ -114,4 +126,6 @@ $(function () {
 
   })
 });
+
+
 

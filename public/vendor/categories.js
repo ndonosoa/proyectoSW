@@ -44,20 +44,23 @@ $.fn.extend({
 $(document).on('click', '#modal_nuevo', function (e){
   e.preventDefault();
   $('.help-block').text('');
-  $('#title_form').text('Agregar Marca');
+  $('#title_form').text('Agregar Categoria');
   $('#form-registro')[0].reset();
   $('#form_tipo').val('1'); 
   $('#modal_new_edit').modal('show');                
 });  
 //abre el modal, limpia el bloque de texto (clase helpblock) resetea formulario 
 $(document).on('keypress', ':input', function(){
-  $('#error_'+$(this).attr('name')).text('');
+  var a = $(this).attr('name');
+  var res = a.replace("category[", "").replace("]", "");
+
+  $('#error_'+res).text('');
 });
 
 $(document).on('click', '.modal_editar', function (e){
   e.preventDefault();
   $('.help-block').text('');
-  $('#title_form').text('Modificar Marca');
+  $('#title_form').text('Modificar Categoria');
   $('#form-registro')[0].reset();
   $.get("categories/"+$(this).data('id')+"/edit")
   .done(function(result){ 
@@ -92,18 +95,27 @@ $(function () {
         $('#modal_new_edit').modal('hide');                
         if(f_t == 2){ 
       //$("#datatables").DataTable().row('#'+id_model).remove().draw(); //comentar si son màs de 500 registros
-        swal({ title: "Modificado", text: "Marca modificada correctamente.", type: "success", timer: 1500 });
+        swal({ title: "Modificado", text: "Categoria modificada correctamente.", type: "success", timer: 1500 });
      }else{
-      swal({ title: "Agregado", text: "Marca agregada correctamente.", type: "success", timer: 1500 });
+      swal({ title: "Agregado", text: "Categoria agregada correctamente.", type: "success", timer: 1500 });
      }
       $('#datatables').DataTable().ajax.reload( null, false ); //cambiar cuando la tabla tenga màs de 500 registros o sea usada por màs de una persona
       //t.row.add( { "odeplan_category":result.odeplan_category,"nombre_category":result.nombre_category, "id_category":result.id_category} ).draw(); //comentar si son màs de 500 registros
-     }).fail(function(error, status){
-      //console.log(error);
-      var e = error.responseJSON;
-      $.each( e, function( key, value ) {
-      //console.log(key, value[0]);
-      $('#error_'+key).append(value[0]).animateCss('fadeIn');
+     }).error(function(xhr){
+      //console.log(evt,xhr,status,error);
+      var errors = $.parseJSON(xhr.responseText);
+      //var e = error.responseJSON;
+      //console.log(errors);
+      $.each( errors, function( i,item ) {
+      //console.log(value[0], key, value.name_region[0], value.odeplan_region[0]);
+      console.log(item);
+          $.each( item, function( a,b) {
+            $('#error_'+a).append(b).animateCss('fadeIn');
+            //console.log(a);
+            //console.log(b);
+            console.log('#error_'+a);
+          });
+      //$('#error_'+key).append(value[0]).animateCss('fadeIn');
       });
       if(f_t == 2){
         //swal({ title: 'Error!', text: 'El registro no pudo ser modificado.', type: "error", timer: 1500 });
@@ -114,4 +126,6 @@ $(function () {
 
   })
 });
+
+
 

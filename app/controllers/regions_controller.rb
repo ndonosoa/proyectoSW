@@ -26,7 +26,6 @@ end
 
 def update
   @region = Region.update(region_params)
-  
 end
 
 

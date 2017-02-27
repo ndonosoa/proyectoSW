@@ -3,7 +3,7 @@
 
 		<div id="contenedor_datos" class="hpanel ">
 			<div class="panel-body  card-box">
-				<button title="Agregar nuevo Cliente" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nuevo</button>
+				<button title="Agregar nuevo Proveedor" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nuevo</button>
 				<br><br>
 				<table id="datatables" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
 					<thead>
@@ -48,114 +48,6 @@
 								<div class="form-group">
     							<label class="col-sm-2 control-label">Rut</label>
     							<div class="col-sm-10">
-										<script type="text/javascript">
-										function Valida_Rut( Objeto )
-										{
-
-										var tmpstr = "";
-
-										var intlargo = Objeto.value
-
-										if (intlargo.length> 0)
-
-										{
-
-										crut = Objeto.value
-
-										largo = crut.length;
-
-										if ( largo <2 )
-
-										{
-
-											alert('rut inválido')
-
-											Objeto.focus()
-
-											return false;
-
-										}
-
-										for ( i=0; i <crut.length ; i++ )
-
-										if ( crut.charAt(i) != ' ' && crut.charAt(i) != '.' && crut.charAt(i) != '-' )
-
-										{
-
-											tmpstr = tmpstr + crut.charAt(i);
-
-										}
-
-										rut = tmpstr;
-
-										crut=tmpstr;
-
-										largo = crut.length;
-
-										if ( largo> 2 )
-
-											rut = crut.substring(0, largo - 1);
-
-										else
-
-											rut = crut.charAt(0);
-
-										dv = crut.charAt(largo-1);
-
-										if ( rut == null || dv == null )
-
-										return 0;
-
-										var dvr = '0';
-
-										suma = 0;
-
-										mul  = 2;
-
-										for (i= rut.length-1 ; i>= 0; i--)
-										{
-											suma = suma + rut.charAt(i) * mul;
-
-											if (mul == 7)
-
-												mul = 2;
-											else
-
-												mul++;
-										}
-
-										res = suma % 11;
-
-										if (res==1)
-
-											dvr = 'k';
-
-										else if (res==0)
-
-											dvr = '0';
-
-										else
-										{
-											dvi = 11-res;
-
-											dvr = dvi + "";
-										}
-
-										if ( dvr != dv.toLowerCase() )
-										{
-
-											alert('El Rut ingresado es Invalido')
-											Objeto.focus()
-											return false;
-										}
-
-										alert('El Rut ingresado es Correcto!')
-
-											Objeto.focus()
-												return true;
-											}
-										}
-								    </script>
  										<input type="text" id="rut_provider_form" name="provider[rut_provider]" onBlur="Valida_Rut(this)" class="form-control" required="required" pattern="\d{3,8}-[\d|kK]{1}" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Debe ser un Rut válido" maxlength="5" />
     								<span id="error_rut_provider" class="help-block text-danger"></span>
     							</div>

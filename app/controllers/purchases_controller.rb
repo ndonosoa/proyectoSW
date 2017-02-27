@@ -1,34 +1,45 @@
 class PurchasesController < ApplicationController
-  def index
+
+	def index
+		
 	end
+
+	
+	def new
+		@providers = Provider.all
+		@categories = Category.all
+		@brands  = Brand.all 
+	end
+
+	def getproductosorden
+		sql = "select p.id, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
+		from products p 
+		inner join brands b on (b.id = p.brand_id) 
+		inner join categories c on (c.id = p.category_id)
+		inner join providers a on (a.id = p.provider_id)
+		where provider_id="+params[:id]
+
+		list = ActiveRecord::Base.connection.execute(sql)       
+		render json: {
+			productos: list
+			}.to_json	
+	end
+
 
 
 	def destroy
-		@provider = Provider.find(params[:id])
-		@provider.destroy
 	end
 
 	def edit
-		provider = Provider.find(params[:id])
-			render json: {
-				provider: provider
-				}.to_json
 	end
 
 	def update
-		a = Provider.find(params[:id])
-		a.update(provider_params)
+
 	end
 
 	def create
-		@provider = Provider.new(provider_params)
-		@provider.state_provider = 1
-		@provider.save
 
 	end
 
-	def provider_params
-		params.require(:provider).permit(:name_provider,:rut_provider,:email_provider,:phone_provider)
-	end
 
 end

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       resources :comunas
 
   #Purchases Routes
+      get '/purchases/json/getproductosorden/:id', to: 'purchases#getproductosorden'
       resources :purchases
 
   #Users routes
