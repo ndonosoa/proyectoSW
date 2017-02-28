@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
 protect_from_forgery with: :exception
 before_filter :authenticate
+before_filter :permission
 
 
 		def authenticate
@@ -10,5 +11,11 @@ before_filter :authenticate
 			end
 		end
 
+		def permission
+			if session[:current_user] == 1
+				redirect_back fallback_location: root_path
+			end
+
+		end
 
 end

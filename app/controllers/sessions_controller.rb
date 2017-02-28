@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 	skip_before_filter :authenticate, only: [:create, :new]
+	skip_before_filter :permission
 	def new
 		
 	end
@@ -11,6 +12,7 @@ class SessionsController < ApplicationController
 
 		if  user && user.password_user == params[:session][:password_user]
 			session[:current_user] = user.type_user
+			session[:current_user_id] = user.id
 			redirect_to root_path
 		else
 			render 'new'

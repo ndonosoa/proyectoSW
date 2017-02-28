@@ -52,6 +52,7 @@ console.log(result);
 $('#nombre_product_form').val(result.product.name_product).animateCss('fadeIn');
 $('#code_product_form').val(result.product.code_product).animateCss('fadeIn');
 $('#price_product_form').val(result.product.price_product).animateCss('fadeIn');
+$('#stock_product_form').val(result.product.stock_product).animateCss('fadeIn');
 $('#provider_id_form').val(result.product.provider_id).animateCss('fadeIn');
 $('#category_id_form').val(result.product.category_id).animateCss('fadeIn');
 $('#brand_id_form').val(result.product.brand_id).animateCss('fadeIn');

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  
+  skip_before_filter :permission, only: [:show]
+
  def index
 end
 

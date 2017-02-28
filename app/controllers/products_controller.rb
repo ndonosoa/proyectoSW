@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+skip_before_filter :permission
 
 def index
 	@providers = Provider.all
@@ -7,7 +8,7 @@ def index
 end
 
 def asd
- sql = "select p.id, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
+ sql = "select p.stock_product,p.id, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
   from products p 
   inner join brands b on (b.id = p.brand_id) 
   inner join categories c on (c.id = p.category_id)
@@ -40,7 +41,7 @@ end
 
 def product_params
     params.require(:product).permit(:name_product, :price_product,
-      :code_product,:brand_id,:category_id, :provider_id)
+      :code_product,:brand_id,:category_id, :provider_id, :stock_product)
 end
 
 end

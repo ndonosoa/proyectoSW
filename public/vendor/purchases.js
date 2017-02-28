@@ -35,7 +35,8 @@ $('#btn_revisar_ordenes').on('click', function(e){
 $('#btn_volver_ordenes').on('click', function(e){
   e.preventDefault();
   $('#contenedor_principal').toggleClass('hide');
-  $('#detalle_ordenes').toggleClass('hide'); 
+  $('#detalle_ordenes').toggleClass('hide');
+  $('#preview_orden_detalle').empty(); 
 });
 
 

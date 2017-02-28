@@ -3,24 +3,26 @@
       <div class="profile-picture">
          <div class="stats-label text-color"><a href="/"><span class="font-extra-bold font-uppercase">Nata</span></a></div>
       </div>
-      <ul class="nav navbar-nav">
+      <ul class="nav">
       <li class="active"><a href="#"></a></li>
       <% if !session[:current_user].blank? %>
+          <li class="nav-label"><a href="/users/<%= session[:current_user_id]%>"><span class="nav-label">Perfil</span></a></li>
+          <li class="nav-label"><a href="/products"><span class="nav-label">Producto</span></a></li>
+          <li class="nav-label"><a href="/purchases/new"><span class="nav-label">Ordenes</span></a></li>
          <% if session[:current_user] == 0 %> 
-          <li class="dropdown">    
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
-            <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-               <li class=""><%= link_to "Categoria", categories_path, method: :get %></li>
+          <li class="">    
+            <a class="accordion-heading" data-toggle="collapse" data-target="#submenu" href="#"><span class="nav-header-primary">Admin</span></a>
+            <ul class="nav nav-second-level collapse" id="submenu">
+               <li class=""><a href="/categories"><span class="nav-label">Categorias</span></a></li>
                <li class=""><a href="/regions"><span class="nav-label">Región</span></a></li>
                <li class=""><a href="/brands"><span class="nav-label">Marca</span></a></li>
                <li class=""><a href="/providers"><span class="nav-label">Proveedor</span></a></li>
                <li class=""><a href="/comunas"><span class="nav-label">Comunas</span></a></li>
+               <li class=""><a href="/users"><span class="nav-label">Usuarios</span></a></li>
             </ul>   
           </li>
           <% end%> 
-          <li class=""><a href="/products"><span class="nav-label">Producto</span></a></li>
-          <li class=""><a href="/purchases/new"><span class="nav-label">Ordenes</span></a></li>
+          
        <%end%>   
      <!-- <ul class="nav navbar-nav" id="side-menu">
         <li class="dropdown">
