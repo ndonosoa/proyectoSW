@@ -33,10 +33,13 @@ Rails.application.routes.draw do
 
   #Purchases Routes
       get '/purchases/json/getproductosorden/:id', to: 'purchases#getproductosorden'
+      get 'purchases/json/revisarjson', to:'purchases#revisarjson'
       resources :purchases
 
   #Users routes
       get '/users/json/getusers', to: 'users#getusers'
+      put '/users/update/:id', to: 'users#updateuser'
+      put '/users/delete/:id', to: 'users#softdeleteuser'
       resources :users
 
   #Login Routes

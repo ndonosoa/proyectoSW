@@ -113,10 +113,11 @@ $(function () {
       //console.log(value[0], key, value.name_region[0], value.odeplan_region[0]);
       console.log(item);
           $.each( item, function( a,b) {
+            console.log(b);
             $('#error_'+a).append(b).animateCss('fadeIn');
             //console.log(a);
             //console.log(b);
-            console.log('#error_'+a);
+           // console.log('#error_'+a);
           });
       //$('#error_'+key).append(value[0]).animateCss('fadeIn');
       });

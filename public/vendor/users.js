@@ -1,3 +1,6 @@
+
+
+
 $(function () {
   $('#datatables').dataTable({
      "ajax": "/users/json/getusers",
@@ -17,6 +20,7 @@ $(function () {
 });
 
 
+
 $(document).on('click', '.eliminar_registro', function (e){
   e.preventDefault();
   var form = $('#form_delete');
@@ -24,17 +28,22 @@ $(document).on('click', '.eliminar_registro', function (e){
   var data = form.serialize();
   var row = $(this).parents('tr');
   var dt = $('#datatables').DataTable();
-  //console.log(url)
-  swal({ title: "Está seguro?", text: "Se eliminara el registro.", type: "warning", showCancelButton: true, confirmButtonColor: "#f05050", confirmButtonText: "Si, Eliminarlo!"
-}).then(function () { 
-    $.post(url,data,function(result){
-      
-      dt.row(row).remove().draw();
-    swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);
-    }); 
-}).catch(swal.noop);
-});
+  var id = $(this).data('campo');
+  console.log(id)
+  $.ajax({
+    type: "PUT",
+    url: "/users/delete/"+id,
+    success: function() { 
+      swal({ title: "Está seguro?", text: "Se eliminara el registro.", type: "warning", showCancelButton: true, confirmButtonColor: "#f05050", confirmButtonText: "Si, Eliminarlo!"
+    }).then(function () { 
+        dt.row(row).remove().draw();
+        swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);
 
+    }).catch(swal.noop); }
+    
+  });
+  
+});
 
 $.fn.extend({
   animateCss: function (animationName) {

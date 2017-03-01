@@ -1,7 +1,6 @@
 class PurchasesController < ApplicationController
 	skip_before_filter :permission
 	def index
-		
 	end
 
 	
@@ -26,7 +25,6 @@ class PurchasesController < ApplicationController
 	end
 
 
-
 	def destroy
 	end
 
@@ -36,10 +34,28 @@ class PurchasesController < ApplicationController
 	def update
 
 	end
-
-	def create
-
+	def revisarjson
+		list = purchase_params
+		render json: {
+			purchase: list
+			}.to_json	
 	end
 
+	def create
+		@purchase = Purchase.new(purchase_params)
+		if @purchase.save
+			@product = Product.find(asd)
+			if @product
+			redirect_to :action => "index"
+		end
+		end		
+	end
 
+	def purchase_params
+    params.require(:purchase).require(:products).require("0").permit(:user_id,:total_purchase,:provider_id)
+	end
+	def asd
+		params.require(:purchase).require(:products).require("0").permit(:product_id)
+		
+	end
 end

@@ -7,10 +7,10 @@ $('#btn_revisar_ordenes').on('click', function(e){
   var total = 0;
   $('#datatables_orden tbody tr').each(function(i,row){
     //console.log(row);
-   // console.log($(this).children()); //.innerText
+    console.log($(this).children()); //.innerText
     var cont=0; var subt = 0; var c = "";
     $(this).children().each(function(a,b){
-      //console.log(b.firstChild.valueAsNumber, b.innerText);
+     // console.log(b);
       cont++;
       switch(cont){
         case 1: c += '<tr><td><div><strong>' + b.innerText + '</strong></div></td>'; break;
@@ -25,11 +25,49 @@ $('#btn_revisar_ordenes').on('click', function(e){
       total = total + subt;
   }) ;
     $('#precio_total').text(total);
-    console.log(total);
+    //console.log(total);
 
 });
 
+/*$('#btn_generar_orden').on('click', function(e){
+  $('#datatables_orden tbody tr').each(function(i,row){
+    //console.log();
+   // console.log($(this).children()); //.innerText
+   var total = 0;
+    var cont=0; var subt = 0; var c = '{ "productos_oden": [{';
+    var productos_orden;
 
+    $(this).children().each(function(a,b){
+      cont++;
+      if(cont == 6){
+        var d= b.firstChild.id;
+      //  console.log(d);
+        //var res = b.replace('<button class="deselect btn btn-danger" data-id="', "").replace('">X</button>', "");
+       // console.log(res);
+      }
+      switch(cont){
+        case 1: c += '"name_product": "'+b.firstChild.innerText+',"'; break;
+        case 3: cant = parseInt(b.firstChild.value); c+= '"stock_product":' + cant + ','; break;
+        case 4: precio = parseInt(b.firstChild.value);c += '"price_product": ' + precio + ',';break;
+        case 5:  subt = cant * precio; c += '<td>' + subt + '</td></tr>'; break;
+        default:break;
+      }
+      
+    });
+      $('#preview_orden_detalle').append(c);
+      total = total + subt;
+  }) ;
+  $.ajax({
+    type: "POST",
+    url: "/purchases/create",
+    data: {productos_orden: JSON.stringify(productos_orden)},
+    success: function() { alert("Success!"); }
+  });
+   // $('#precio_total').text(total);
+    //console.log(total);
+
+
+})*/
 
 
 $('#btn_volver_ordenes').on('click', function(e){
@@ -59,7 +97,7 @@ $(function () {
 
       tr.toggleClass('hide');
 
-      var row = t2.row.add([prod,categoria,'<input class="cantidad" name="cantidad" type="number" min="1" value="1">','<input class="precio" name="precio" type="number">','<span class="subt" style="font-weight: bold;"></span>','<button class="deselect btn btn-danger" data-id='+id+'>X</button>']).draw(false).node();
+      var row = t2.row.add([prod,categoria,'<input class="cantidad" name="cantidad" type="number" min="1" value="1" style="text-align:right;">','<input class="precio" name="precio" type="number" min="1" value="1" style="text-align:right;" >','<span class="subt" style="font-weight: bold;"></span>','<button class="deselect btn btn-danger" id="'+id+'" data-id='+id+'>X</button>']).draw(false).node();
       //$(row).find('td').eq(5).data('id', id);
       
      });

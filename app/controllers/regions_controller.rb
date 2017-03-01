@@ -4,6 +4,10 @@ class RegionsController < ApplicationController
 def index
 end
 
+def show
+  
+end
+
 
  def getregions
     list = Region.all       
