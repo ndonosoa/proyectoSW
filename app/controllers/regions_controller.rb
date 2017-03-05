@@ -29,7 +29,12 @@ def edit
 end
 
 def update
-  @region = Region.update(region_params)
+  @region = Region.find(params[:id])
+  if @region.update(region_params)
+  else
+    render :json => { :errors => @region.errors }, :status => 422
+  end
+
 end
 
 

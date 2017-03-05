@@ -5,17 +5,16 @@ class SessionsController < ApplicationController
 		
 	end
 	def index
-		
+	
 	end
 	def create
-		user = User.where(rut_user: params[:session][:rut_user]).first
-
-		if  user && user.password_user == params[:session][:password_user]
+		user = User.find_by(rut_user: params[:rut_user])	
+		if  user && user.password_user == params[:password_user]
 			session[:current_user] = user.type_user
 			session[:current_user_id] = user.id
 			redirect_to root_path
 		else
-			render 'new'
+			
 		end
 	end
 
@@ -23,5 +22,7 @@ class SessionsController < ApplicationController
 		session[:current_user] = nil
 		redirect_to root_path
 	end
+
+
 
 end

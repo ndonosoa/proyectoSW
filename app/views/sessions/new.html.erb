@@ -1,21 +1,30 @@
-<% provide(:title, "Log in") %>
-<h1>Log in</h1>
-
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for :session, :url => { :action => :create} do |f| %>
+	<div class="col-md-7">
+		<div class="text-center m-b-md">
+			<h3>PLEASE LOGIN TO APP</h3>
+			<small>This is the best app ever!</small>
+		</div>
+		<div class="hpanel">
+			<div class="panel-body">
+				<form action="/login" method="POST">
+					<div class="form-group">
+						<label class="control-label" for="rut_user_form">Rut</label>
+						<input type="text" placeholder="XXXXXXXX-X" title="Por favor ingrese su rut" required="" value="17921153-k" name="rut_user" id="rut_user" class="form-control" pattern="^[1-9][0-9]{5,7}-[0-9|kK]">
+						<span class="help-block small">Your unique username to app</span>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="password">Password</label>
+						<input type="password" title="Por favor ingrese su password" placeholder="******" required="" value="12341234" name="password_user" id="password_user" class="form-control">
+						<span class="help-block small">Yur strong password</span>
+					</div>
 
-      <%= f.label :rut %>
-      <%= f.text_field :rut_user, class: 'form-control' %>
+					<button class="btn btn-success" id="btn_login">Login</button>
 
-      <%= f.label :password %>
-      <%= f.password_field :password_user, class: 'form-control' %>
-
-      <%= f.submit "Log in", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
 
 
 

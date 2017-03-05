@@ -24,15 +24,22 @@ class BrandsController < ApplicationController
 	end
 
 	def update
-		@brand = Brand.update(brand_params)
+
+		@brand = Brand.find(params[:id])
+		if @brand.update(brand_params)
+		else
+			render :json => { :errors => @brand.errors }, :status => 422
+		end
 	end
 
 	def create
 		@brand = Brand.new(brand_params)
 
-		@brand.save
-
-	end
+		if @brand.save
+		else
+    	render :json => { :errors => @brand.errors }, :status => 422
+ 	 end
+   end
 
 	def brand_params
 		params.require(:brand).permit(:name_brand)

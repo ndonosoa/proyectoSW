@@ -21,7 +21,6 @@ end
 end
 
 def destroy
-  #@user.destroy
 end
 
 def edit
@@ -32,16 +31,28 @@ def edit
 end
 
 def update
-  @user = User.update(user_params)
-  
+  if @user.update(user_params)
+  else
+    render :json => { :errors => @user.errors }, :status => 422
+  end  
 end
 
 def softdeleteuser
   @user.state_user = 0
-  @user.save
+  if @user.save
+  else
+    render :json => { :errors => @user.errors }, :status => 422
+  end
 end
+
+
 def updateuser
-  @user = User.update(params.require(:updateuser).permit(:email_user,:password_user))
+    @user.password_user = params[:updateuser][:password_user]
+    @user.email_user = params[:updateuser][:email_user]
+    if @user.save
+    else
+      render :json => { :errors => @user.errors }, :status => 422
+    end
 end
 
 def create
@@ -59,6 +70,6 @@ end
       @user = User.find(params[:id])
     end
    def user_params
-     params.require(:user).permit(:name_user, :rut_user, :email_user)
+    params.require(:user).permit(:name_user, :rut_user, :email_user)
    end
 end

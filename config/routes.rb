@@ -25,7 +25,13 @@ Rails.application.routes.draw do
   #Provider Routes
       get '/providers/json/getproviders', to: 'providers#getproviders'
       get '/providers/json/getcities', to: 'providers#getcities'
-      resources :providers
+      put '/providers/delete/:id', to: 'providers#softdeleteprovider'
+      get '/providers', to: 'providers#index'
+      get '/provider/new', to: 'providers#new'
+      post '/providers', to: 'providers#create'
+      get '/providers/:id/edit', to: 'providers#edit'
+      patch '/providers/:id', to: 'providers#update'
+      #resources :providers
 
   #Rutas comuna
       get '/comunas/json/getcomunas', to: 'comunas#getcomunas'
@@ -33,12 +39,15 @@ Rails.application.routes.draw do
 
   #Purchases Routes
       get '/purchases/json/getproductosorden/:id', to: 'purchases#getproductosorden'
-      get 'purchases/json/revisarjson', to:'purchases#revisarjson'
-      resources :purchases
+      get '/purchases/json/getpurchases', to: 'purchases#getpurchases'
+      post '/purchases', to:'purchases#create'
+      get '/purchases/new', to: 'purchases#new'
+      get '/purchases', to: 'purchases#index'
+      #resources :purchases
 
   #Users routes
       get '/users/json/getusers', to: 'users#getusers'
-      put '/users/update/:id', to: 'users#updateuser'
+      patch '/users/update/:id', to: 'users#updateuser'
       put '/users/delete/:id', to: 'users#softdeleteuser'
       resources :users
 

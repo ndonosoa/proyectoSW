@@ -30,7 +30,10 @@ end
 
 def update
   a = Comuna.find(params[:id])
-  a.update(comuna_params)
+  if a.update(comuna_params)
+  else
+    render :json => { :errors => @a.errors }, :status => 422
+  end
   
 end
 

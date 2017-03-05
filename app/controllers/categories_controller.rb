@@ -25,16 +25,21 @@ def edit
 end
 
 def update
-  @category = Category.update(category_params)
-  
+  @category = Category.find(params[:id])
+  if @category.update(category_params)
+  else
+    render :json => { :errors => @category.errors }, :status => 422
+  end
 end
 
 
 def create
     @category = Category.new(category_params)
-    @category.save
-
+    if @category.save
+    else
+    render :json => { :errors => @category.errors }, :status => 422
   end
+end
 
 
    def category_params

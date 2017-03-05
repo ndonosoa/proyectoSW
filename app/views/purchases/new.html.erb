@@ -48,8 +48,8 @@
             </tr>
           </thead>
         </table>
-        <button class="btn btn-info" id="btn_revisar_ordenes">Revisar Ordenes de Compra</button>
-        <button class="btn btn-info" id="btn_generar_orden" style="text-align:right;">Generar orden de compra</button>
+        <button class="btn btn-info" disabled="disabled" id="btn_revisar_ordenes">Revisar Ordenes de Compra</button>
+        <button class="btn btn-info" disabled="disabled" id="btn_generar_orden" style="text-align:right;">Generar orden de compra</button>
       </div>
     </div>
 
@@ -153,10 +153,10 @@
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="/vendor/purchases.js"></script>
-<script>
-  $('#btn_generar_orden').on('click', function(e){
+<script> 
+$('#btn_generar_orden').on('click', function(e){
   
-       var total = 0;
+       var total_purchase = 0;
        var a;
        var obj = new Object();
        obj.products = new Array();
@@ -177,42 +177,32 @@
                obj.products[i].stock_product = cant; break;
                break;
         case 4: precio = parseInt(b.firstChild.value);
-                obj.products[i].price_product = precio;
+                obj.products[i].price_product = precio
+                subt = precio * cant;
                 break;
         case 6: obj.products[i].product_id = b.lastChild.id;
         default:break;
       }
+      console.log(subt);
       
     });
     i++;
-     // $('#preview_orden_detalle').append(c);
-      total = total + subt;
+      total_purchase = total_purchase + subt;
   }) ;
-    /*c = [{"user_id": <%= session[:current_user_id] %>, "total_purchase": total, "provider_id": parseInt($('#proveedor_id_form').val())}];
-    c += '{"user_id" =>' + <%= session[:current_user_id] %> + ',';
-    c += '"total_purchase"=> ' +total +',';
-    c += '"provider_id" =>' + $('#proveedor_id_form').val() + '}]}';*/
-    
-      obj.provider_id = parseInt($('#proveedor_id_form').val());
-      obj.user_id = <%= session[:current_user_id] %>;
-      obj.total_purchase = total;
-      console.log(i);
-      for(var f=0;f<i;f++)
-      {
-        //console.log(String(obj.products[f]));
-      } 
-      console.log(JSON.stringify(obj));                 
+    var user_id = <%= session[:current_user_id] %>;
+    var provider_id = String($('#proveedor_id_form').val());                
   $.ajax({
     type: "POST",
     url: "/purchases",
-    data: {purchase: obj},
+    data: {obj, total_purchase, user_id, provider_id, i},
     success: function() { alert(); }
     
   });
-   // $('#precio_total').text(total);
-    //console.log(total);
 
 });
 </script>
+
+
+
 <%end%>
 

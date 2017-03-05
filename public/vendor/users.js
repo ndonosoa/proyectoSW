@@ -1,4 +1,9 @@
-
+$("#name_user_form").on('keyup', function(e) {
+    var val = $(this).val();
+   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g)) {
+       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ''));
+   }
+});
 
 
 $(function () {

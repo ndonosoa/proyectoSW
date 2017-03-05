@@ -48,28 +48,28 @@
 								<div class="form-group">
     							<label class="col-sm-2 control-label">Rut</label>
     							<div class="col-sm-10">
- 										<input type="text" id="rut_provider_form" name="provider[rut_provider]" onBlur="Valida_Rut(this)" class="form-control" required="required" pattern="\d{3,8}-[\d|kK]{1}" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Debe ser un Rut válido"  />
+ 										<input type="text" id="rut_provider_form" name="provider[rut_provider]" onBlur="Valida_Rut(this)" class="form-control" required="required" pattern="\d{3,8}-[\d|kK]{1}" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Debe ser un Rut válido"  maxlength="15" />
     								<span id="error_rut_provider" class="help-block text-danger"></span>
     							</div>
 								</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">Nombre</label>
     							<div class="col-sm-10">
-    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" required class="form-control" autocomplete="off"
+    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" required class="form-control" autocomplete="off" maxlength="40">
     								<span id="error_nombre_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">Teléfono</label>
     							<div class="col-sm-10">
-    								<input id="phone_provider_form" name="provider[phone_provider]" type="text" required pattern="^[9|8|7|2]\d{8}$" class="form-control" autocomplete="off" placeholder="Telefono de 9 digitos">
+    								<input id="phone_provider_form" name="provider[phone_provider]" type="text" required pattern="^[9|8|7|2]\d{8}$" class="form-control" autocomplete="off" maxlength="9">
 										<span id="error_telefono_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
     						<div class="form-group">
     							<label class="col-sm-2 control-label">eMail</label>
     							<div class="col-sm-10">
-    								<input type="email" id="email_provider_form" name="provider[email_provider]" placeholder="Ingrese su email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required class="form-control" autocomplete="off">
+    								<input type="email" id="email_provider_form" name="provider[email_provider]" placeholder="Ingrese su email" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required class="form-control" autocomplete="off" maxlength="30">
     								<span id="error_email_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
