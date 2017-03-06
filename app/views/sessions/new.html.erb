@@ -9,13 +9,13 @@
 				<form action="/login" method="POST">
 					<div class="form-group">
 						<label class="control-label" for="rut_user_form">Rut</label>
-						<input type="text" placeholder="XXXXXXXX-X" title="Por favor ingrese su rut" required="" value="17921153-k" name="rut_user" id="rut_user" class="form-control" pattern="^[1-9][0-9]{5,7}-[0-9|kK]">
-						<span class="help-block small">Your unique username to app</span>
+						<input type="text" placeholder="XXXXXXXX-X" title="Por favor ingrese su rut" required="" value="<%= @error_rut_value%>" name="rut_user" id="rut_user" class="form-control" pattern="^[1-9][0-9]{5,7}-[0-9|kK]">
+						<span class="help-block small text-danger" id="error_rut_user"><%= @error_rut_message%></span>
 					</div>
 					<div class="form-group">
 						<label class="control-label" for="password">Password</label>
-						<input type="password" title="Por favor ingrese su password" placeholder="******" required="" value="12341234" name="password_user" id="password_user" class="form-control">
-						<span class="help-block small">Yur strong password</span>
+						<input type="password" title="Por favor ingrese su password" placeholder="******" required="" value="<%= @error_password_value%>" name="password_user" id="password_user" class="form-control">
+						<span class="help-block small text-danger" id="error_password_user"><%= @error_password_message %></span>
 					</div>
 
 					<button class="btn btn-success" id="btn_login">Login</button>
@@ -25,6 +25,14 @@
 		</div>
 	</div>
 </div>
+<% content_for :js do%>
+<script>
+$(document).on('keypress', ':input', function(){
+  var a = $(this).attr('name');
+  $('#error_'+a).text('');
+});
+</script>
+<%end%>
 
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170304002616) do
+ActiveRecord::Schema.define(version: 20170305231214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,9 @@ ActiveRecord::Schema.define(version: 20170304002616) do
     t.integer  "product_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "purchase_id"
     t.index ["product_id"], name: "index_price_histories_on_product_id", using: :btree
+    t.index ["purchase_id"], name: "index_price_histories_on_purchase_id", using: :btree
   end
 
   create_table "product_providers", force: :cascade do |t|
@@ -113,7 +115,9 @@ ActiveRecord::Schema.define(version: 20170304002616) do
     t.integer  "product_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "purchase_id"
     t.index ["product_id"], name: "index_stock_histories_on_product_id", using: :btree
+    t.index ["purchase_id"], name: "index_stock_histories_on_purchase_id", using: :btree
   end
 
   create_table "stocks", force: :cascade do |t|
@@ -138,6 +142,7 @@ ActiveRecord::Schema.define(version: 20170304002616) do
 
   add_foreign_key "comunas", "regions"
   add_foreign_key "price_histories", "products"
+  add_foreign_key "price_histories", "purchases"
   add_foreign_key "product_providers", "products"
   add_foreign_key "product_providers", "providers"
   add_foreign_key "products", "brands"
@@ -149,5 +154,6 @@ ActiveRecord::Schema.define(version: 20170304002616) do
   add_foreign_key "purchases", "providers"
   add_foreign_key "purchases", "users"
   add_foreign_key "stock_histories", "products"
+  add_foreign_key "stock_histories", "purchases"
   add_foreign_key "stocks", "products"
 end

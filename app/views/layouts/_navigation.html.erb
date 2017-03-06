@@ -8,7 +8,7 @@
       <% if !session[:current_user].blank? %>
           <li class="nav-label"><a href="/users/<%= session[:current_user_id]%>"><span class="nav-label">Perfil</span></a></li>
           <li class="nav-label"><a href="/products"><span class="nav-label">Producto</span></a></li>
-          <li class="nav-label"><a href="/purchases/new"><span class="nav-label">Ordenes</span></a></li>
+          <li class="nav-label"><a href="/purchases"><span class="nav-label">Ordenes</span></a></li>
          <% if session[:current_user] == 0 %> 
           <li class="">    
             <a class="accordion-heading" data-toggle="collapse" data-target="#submenu" href="#"><span class="nav-header-primary">Admin</span></a>

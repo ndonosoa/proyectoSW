@@ -1,3 +1,8 @@
+
+//funciones del Index
+
+
+//Llena la tabla de ordenes de compra
 $(function () {
   $('#datatables').dataTable({
    "ajax": "/purchases/json/getpurchases",
@@ -14,7 +19,7 @@ $(function () {
 { "data": "id", 
 "sClass": "text-center","orderable": false,"searchable": false,
 "render": function(data,type,row,meta){
-  return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>  <a href="/purchase/details/"'+row.id+'><button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button></a>  <button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
+  return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>  <button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
 }
 } 
 ],
@@ -22,6 +27,37 @@ $(function () {
 });
 
 
+
+
+
+$(document).on('click', '.revisar_ficha_big', function(){
+  $('#purchase_detail').toggleClass('hide');
+  $('#purchase_show').toggleClass('hide');
+  var id = $(this).data('id');
+  $('#datatables_detalle').dataTable({
+   "ajax": "/purchases/json/getdetalleorden/"+id,
+   "sAjaxDataProp": "detalle",
+   "columns": [
+        {"data":"name_product"},
+        {"data":"code_product"},
+        {"data":"name_provider"},           
+        {"data": "quantity_product" },
+        {"data": "price_purchase_detail" }, 
+     ],
+}); 
+
+});
+$('#btn_mostrar_ordenes').on('click', function(){
+  $('#purchase_detail').toggleClass('hide');
+  $('#purchase_show').toggleClass('hide');
+  var table = $('#datatables_detalle').DataTable();
+  table.clear().draw();
+  table.destroy();
+});
+
+
+
+//Funciones del new
 
 $('#btn_revisar_ordenes').on('click', function(e){
   e.preventDefault();
@@ -38,17 +74,17 @@ $('#btn_revisar_ordenes').on('click', function(e){
      switch(cont){
       case 1: c += '<tr><td><div><strong>' + b.innerText + '</strong></div></td>'; break;
       case 3: var o = parseInt(b.firstChild.value);
-              if(isNaN(o))
-                cant = 1;
-              else
-                cant = o; 
-              c+= '<td>' + cant + '</td>'; break;
+      if(isNaN(o))
+        cant = 1;
+      else
+        cant = o; 
+      c+= '<td>' + cant + '</td>'; break;
       case 4: var r = parseInt(b.firstChild.value);
-              if(isNaN(r))
-                precio = 1;
-              else
-                precio = r; 
-              c += '<td>' + precio + '</td>';break;
+      if(isNaN(r))
+        precio = 1;
+      else
+        precio = r; 
+      c += '<td>' + precio + '</td>';break;
       case 5:  subt = cant * precio; c += '<td>' + subt + '</td></tr>'; break;
       default:break;
     }

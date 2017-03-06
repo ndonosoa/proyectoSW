@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       post '/purchases', to:'purchases#create'
       get '/purchases/new', to: 'purchases#new'
       get '/purchases', to: 'purchases#index'
+      get '/purchases/json/getdetalleorden/:id', to: 'purchases#getdetalleorden'
       #resources :purchases
 
   #Users routes

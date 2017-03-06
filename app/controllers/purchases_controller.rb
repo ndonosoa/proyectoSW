@@ -10,6 +10,22 @@ class PurchasesController < ApplicationController
 		@brands  = Brand.all 
 	end
 
+	def getdetalleorden
+		sql = "select p.id, p.code_product, p.name_product, a.name_provider, 
+				d.quantity_product, d.price_purchase_detail
+		from purchase_details d
+
+		inner join products p on (p.id = d.product_id)
+		inner join providers a on (a.id = p.provider_id)
+		where purchase_id="+params[:id]
+
+		list = ActiveRecord::Base.connection.execute(sql)       
+		render json: {
+			detalle: list
+			}.to_json
+		
+	end
+
 	def getproductosorden
 		sql = "select p.id, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
 		from products p 
@@ -85,9 +101,11 @@ class PurchasesController < ApplicationController
 					producto.stock_product = producto.stock_product + @quantity_product.to_i
 					producto.price_product = @price_product 
 					price_history = PriceHistory.new(product_id: @product_id,
-													  price_history: @price_product)
+													  price_history: @price_product,
+													  purchase_id: @purchase.id)
 					stock_history = StockHistory.new(product_id: @product_id,
-													  quantity_stock_history: @quantity_product)
+													  quantity_stock_history: @quantity_product,
+													  purchase_id: @purchase.id)
 					if producto.save && price_history.save && stock_history.save
 						cont = cont + 1				
 					end
