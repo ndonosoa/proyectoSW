@@ -53,7 +53,7 @@ class ProvidersController < ApplicationController
 
 	def create
 		check_provider = Provider.find_by(rut_provider: params[:provider][:rut_provider])
-		if check_provider.state_provider == 0
+		if check_provider && check_provider.state_provider == 0
 			check_provider.state_provider = 1
 			check_provider.name_provider = params[:provider][:name_provider]
 			check_provider.phone_provider = params[:provider][:phone_provider]

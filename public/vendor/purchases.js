@@ -19,7 +19,7 @@ $(function () {
 { "data": "id", 
 "sClass": "text-center","orderable": false,"searchable": false,
 "render": function(data,type,row,meta){
-  return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>  <button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
+  return  '<button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
 }
 } 
 ],
@@ -127,7 +127,7 @@ $(function () {
 
       tr.toggleClass('hide');
 
-      var row = t2.row.add([prod,categoria,'<input class="cantidad" name="cantidad" id="'+id+'" type="text"  value="1"  style="text-align:right;">','<input class="precio" name="precio" type="text" value="'+value+'" style="text-align:right;" >','<span class="subt" style="font-weight: bold;">'+value+'</span>','<button class="deselect btn btn-danger" id="'+id+'" data-id='+id+'>X</button>']).draw(false).node();
+      var row = t2.row.add([prod,categoria,'<input class="cantidad" maxlength="3" name="cantidad" id="'+id+'" type="text"  value="1"  style="text-align:right;">','<input class="precio" maxlength="5" name="precio" type="text" value="'+value+'" style="text-align:right;" >','<span class="subt" style="font-weight: bold;">'+value+'</span>','<button class="deselect btn btn-danger" id="'+id+'" data-id='+id+'>X</button>']).draw(false).node();
       //$(row).find('td').eq(5).data('id', id);
       
     });
@@ -143,7 +143,6 @@ $(function () {
     var asd = 0;
     if (val.match(/[^0-9]/g)) {
       asd = parseInt(val.replace(/[^0-9]/g, ''));
-      console.log(asd, val);
       if(isNaN(asd))
       {
         $(this).val(1);

@@ -48,7 +48,7 @@
 								<div class="form-group">
     							<label class="col-sm-2 control-label">Rut</label>
     							<div class="col-sm-10">
- 										<input type="text" id="rut_provider_form" name="provider[rut_provider]" onBlur="Valida_Rut(this)" class="form-control" required="required" pattern="\d{3,8}-[\d|kK]{1}" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Debe ser un Rut válido"  maxlength="15" />
+ 										<input type="text" id="rut_provider_form" name="provider[rut_provider]" class="form-control" required="required" pattern="^[1-9][0-9]{5,7}-[0-9|kK]" placeholder="Ingrese RUT sin puntos" autocomplete="off" title="Rut formato XXXXXXXX-X"  maxlength="15" />
     								<span id="error_rut_provider" class="help-block text-danger"></span>
     							</div>
 								</div>

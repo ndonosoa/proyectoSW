@@ -195,7 +195,7 @@ $('#btn_generar_orden').on('click', function(e){
     type: "POST",
     url: "/purchases",
     data: {obj, total_purchase, user_id, provider_id, i},
-    success: function() { alert(); }
+    success: function() { swal({ title: "Agregado", text: "Orden creada correctamente", type: "success", timer: 1500 }); }
     
   });
 

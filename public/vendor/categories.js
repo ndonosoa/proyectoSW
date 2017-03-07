@@ -1,7 +1,8 @@
+
 $("#nombre_category_form").on('keyup', function(e) {
     var val = $(this).val();
-   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g)) {
-       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ''));
+   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g)) {
+       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
    }
 });
 $(function () {
@@ -70,7 +71,7 @@ $(document).on('click', '.modal_editar', function (e){
   $('#form-registro')[0].reset();
   $.get("categories/"+$(this).data('id')+"/edit")
   .done(function(result){ 
-console.log(result);
+//console.log(result);
 $('#odeplan_category_form').val(result.category.odeplan_category).animateCss('fadeIn');
 $('#nombre_category_form').val(result.category.name_category).animateCss('fadeIn');
 });   
@@ -84,17 +85,23 @@ $(function () {
   $('#form-registro').submit(function(e) { 
    e.preventDefault();       
    $('.help-block').text('');
+   var data;
+   var val = $('#nombre_category_form').val();
+   if (val.match(/^\s*|\s*$/g)) {
+        data = $('#nombre_category_form').val(val.replace(/^\s*|\s*$/g, ''));
+       console.log(data);
+   }
    var t = $('#datatables').DataTable(); var f_t = $('#form_tipo').val();
    var form = $('#form-registro'); var url = form.attr('action'); 
 
    if(f_t == 2){
     var id_model = $('#form_id_model').val();
-    var data = $('#form-registro :not(#form_tipo,#form_id_model)').serialize(); 
+     data = $('#form-registro :not(#form_tipo,#form_id_model)').serialize(); 
     url = url+'/'+id_model;
   }else{
-    var data = $('#form-registro :not(#form_tipo,#form_id_model,#form_method)').serialize(); 
+     data = $('#form-registro :not(#form_tipo,#form_id_model,#form_method)').serialize(); 
   }
-
+  
   $.post(url, data, function(result){
   }).done(function(result){
         //console.log(result);
@@ -114,12 +121,12 @@ $(function () {
       //console.log(errors);
       $.each( errors, function( i,item ) {
       //console.log(value[0], key, value.name_region[0], value.odeplan_region[0]);
-      console.log(item);
+     // console.log(item);
           $.each( item, function( a,b) {
             $('#error_'+a).append(b).animateCss('fadeIn');
             //console.log(a);
             //console.log(b);
-            console.log('#error_'+a);
+           // console.log('#error_'+a);
           });
       //$('#error_'+key).append(value[0]).animateCss('fadeIn');
       });

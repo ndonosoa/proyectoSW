@@ -1,4 +1,15 @@
-
+$('#price_product_form').on('keyup', function(e) {
+    var val = $(this).val();
+   if (val.match(/[^0-9]/g)) {
+       $(this).val(val.replace(/[^0-9]/g, ''));
+   }
+});
+$('#stock_product_form').on('keyup', function(e) {
+    var val = $(this).val();
+   if (val.match(/[^0-9]/g)) {
+       $(this).val(val.replace(/[^0-9]/g, ''));
+   }
+});
 
 
 $(document).on('click', '.eliminar_registro', function (e){

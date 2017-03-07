@@ -1,7 +1,7 @@
-$("#nombre_region_form").on('keyup', function(e) {
+$('#nombre_region_form').on('keyup', function(e) {
     var val = $(this).val();
-   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g)) {
-       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ''));
+   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g)) {
+       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
    }
 });
 
@@ -88,6 +88,14 @@ $(function () {
   $('#form-registro').submit(function(e) { 
    e.preventDefault();       
    $('.help-block').text('');
+   var data;
+   var val = $('#nombre_region_form').val();
+   var val2 = $('#odeplan_region_form').val();
+   if (val.match(/^\s*|\s*$/g) || val2.match(/^\s*|\s*$/g)) {
+        $('#nombre_region_form').val(val.replace(/^\s*|\s*$/g, ''));
+        $('#odeplan_region_form').val(val2.replace(/^\s*|\s*$/g, ''));      
+   }
+
    var t = $('#datatables').DataTable(); var f_t = $('#form_tipo').val();
    var form = $('#form-registro'); var url = form.attr('action'); 
 

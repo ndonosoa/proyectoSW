@@ -1,7 +1,7 @@
 $("#nombre_comuna_form").on('keyup', function(e) {
     var val = $(this).val();
-   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g)) {
-       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ]/g, ''));
+   if (val.match(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g)) {
+       $(this).val(val.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, ''));
    }
 });
 
@@ -86,15 +86,21 @@ $(function () {
   $('#form-registro').submit(function(e) { 
    e.preventDefault();       
    $('.help-block').text('');
+   var data;
+   var val = $('#nombre_comuna_form').val();
+   if (val.match(/^\s*|\s*$/g)) {
+        data = $('#nombre_comuna_form').val(val.replace(/^\s*|\s*$/g, ''));
+       console.log(data);
+   }
    var t = $('#datatables').DataTable(); var f_t = $('#form_tipo').val();
    var form = $('#form-registro'); var url = form.attr('action'); 
 
    if(f_t == 2){
     var id_model = $('#form_id_model').val();
-    var data = $('#form-registro :not(#form_tipo,#form_id_model)').serialize(); 
+     data = $('#form-registro :not(#form_tipo,#form_id_model)').serialize(); 
     url = url+'/'+id_model;
   }else{
-    var data = $('#form-registro :not(#form_tipo,#form_id_model,#form_method)').serialize(); 
+     data = $('#form-registro :not(#form_tipo,#form_id_model,#form_method)').serialize(); 
   }
 
   $.post(url, data, function(result){
