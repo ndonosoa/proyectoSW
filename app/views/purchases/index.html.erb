@@ -5,19 +5,38 @@
 			<div class="panel-body  card-box">
 				<a href="/purchases/new"><button title="Agregar nuevo Proveedor" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nueva Orden</button></a>
 				<br><br>
-				<table id="datatables" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+				<table id="datatables_pendiente" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
 					<thead>
 						<tr>
 							<th>Id Orden</th>
 							<th>Proveedor</th>
 							<th>Fecha Creación</th>
-							<th>Total</th>
-						  <% if session[:current_user] == 0 %>             
-                          <th style="width:15%;">Acción</th>
-                          <%end%> 
+							<th>Total</th>            
+              <th style="width:15%;">Acción</th>
+ 
 						</tr>
 					</thead>
 				</table>
+        <div>
+        <span>hola</span>
+        </div>
+        <table id="datatables_despachada" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Id Orden</th>
+              <th>Proveedor</th>
+              <th>Fecha Creación</th>
+              <th>Total</th>            
+              <th style="width:15%;">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @list.each do |a| %>
+          <tr><td><%=a.id%></td><td><%=a.provider.name_provider%></td><td><%=a.created_at.strftime("%F")%></td><td><%=a.total_purchase%></td> <td><button title="Ver Ficha" data-id="<%=a.id%>" id="<%=a.id%>"  class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button></td></tr>
+
+          <%end%>
+          </tbody>
+        </table>
 			</div>
 		</div>
 
@@ -48,8 +67,7 @@
 <% content_for :js do%>
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-<script src="/vendor/purchases.js">
-</script>
+<script src="/vendor/purchases.js"></script>
 <%end%>
 
 <form action="providers/:campo_id" id="form_delete" method="post">

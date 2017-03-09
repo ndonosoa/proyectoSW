@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #Product Routes
 	get '/products/json/getproducts', to: 'products#asd'
+  get '/products/json/gethistorial/:id', to: 'products#gethistorial'
+  get '/products/json/gethistoriald/:id', to: 'products#gethistoriald'
 	resources :products
 
 
@@ -30,7 +32,7 @@ Rails.application.routes.draw do
       get '/provider/new', to: 'providers#new'
       post '/providers', to: 'providers#create'
       get '/providers/:id/edit', to: 'providers#edit'
-      patch '/providers/:id', to: 'providers#update'
+      put '/providers/:id', to: 'providers#update'
       #resources :providers
 
   #Rutas comuna
@@ -40,10 +42,12 @@ Rails.application.routes.draw do
   #Purchases Routes
       get '/purchases/json/getproductosorden/:id', to: 'purchases#getproductosorden'
       get '/purchases/json/getpurchases', to: 'purchases#getpurchases'
+      get '/purchases/json/getpurchasesd', to: 'purchases#getpurchasesd'
       post '/purchases', to:'purchases#create'
       get '/purchases/new', to: 'purchases#new'
       get '/purchases', to: 'purchases#index'
       get '/purchases/json/getdetalleorden/:id', to: 'purchases#getdetalleorden'
+      put '/purchases/updatedetail/:id', to: 'purchases#updatedetail'
       #resources :purchases
 
   #Users routes

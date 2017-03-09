@@ -1,3 +1,56 @@
+$(document).on('click', '.revisar_ficha_big', function(e){
+    $('#contenedor_historial').toggleClass('hide');
+    $('#contenedor_principal').toggleClass('hide');
+    var product = $(this).data('product');
+    var provider = $(this).data('provider');
+    var code = $(this).data('code');
+    var id = $(this).data('id');
+      $('#datatables_historial').dataTable({
+     "ajax": "/products/json/gethistorial/"+id,
+     "sAjaxDataProp": "historial",
+     "columns":[ 
+        {"data":"price_history"},
+        {"data": "quantity_stock_history"},
+        {"data": "created_at"}          
+     ],
+  });
+
+});
+$('#btn_volver').on('click', function(){
+  $('#contenedor_historial').toggleClass('hide');
+  $('#contenedor_principal').toggleClass('hide');
+  var table = $('#datatables_historial').DataTable();
+  table.clear().draw();
+  table.destroy();
+})
+
+
+
+
+
+
+
+$(document).on('click', '.eliminar_registro', function (e){
+  e.preventDefault();
+  var form = $('#form_delete');
+  var url = form.attr('action').replace(':campo_id', $(this).data('campo'));
+  var row = $(this).parents('tr');
+  var dt = $('#datatables').DataTable();
+  //console.log(url)
+  swal({ title: "Está seguro?", text: "Se eliminara el registro.", type: "warning", showCancelButton: true, confirmButtonColor: "#f05050", confirmButtonText: "Si, Eliminarlo!"
+}).then(function () { 
+    $.delete(url,data,function(result){
+      
+      dt.row(row).remove().draw();
+    swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);
+    }); 
+}).catch(swal.noop);
+});
+
+
+
+
+//Validaciones
 $('#price_product_form').on('keyup', function(e) {
     var val = $(this).val();
    if (val.match(/[^0-9]/g)) {
@@ -11,7 +64,7 @@ $('#stock_product_form').on('keyup', function(e) {
    }
 });
 
-
+//boton eliminar
 $(document).on('click', '.eliminar_registro', function (e){
   e.preventDefault();
   var form = $('#form_delete');

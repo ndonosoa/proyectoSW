@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
 	skip_before_filter :authenticate, only: [:create, :new]
 	skip_before_filter :permission
 	def new
-		@error_password_value = ""
 		@error_password_message = ""
 		@error_rut_message = ""
 		@error_rut_value = ""
@@ -21,13 +20,11 @@ class SessionsController < ApplicationController
 				redirect_to root_path
 			else
 				@error_password_message = "Contraseña incorrecta"
-				@error_password_value = params[:password_user]
 				@error_rut_value = params[:rut_user]
 				render 'new'
 			end
 		else
 			@error_rut_message = "Rut no encontrado"
-			@error_password_value = params[:password_user]
 			@error_rut_value = params[:rut_user]
 			render 'new'
 		end
