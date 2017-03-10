@@ -1,14 +1,13 @@
 <div class="row">
 	<div class="col-md-7">
 		<div class="text-center m-b-md">
-			<h3>PLEASE LOGIN TO APP</h3>
-			<small>This is the best app ever!</small>
+			<h3>Bienvenido a AppStock</h3>
 		</div>
 		<div class="hpanel">
 			<div class="panel-body">
 				<form action="/login" method="POST">
 					<div class="form-group">
-						<label class="control-label" for="rut_user_form">Rut</label>
+						<label class="control-label" for="rut_user_form">Ingrese su Rut</label>
 						<input type="text" placeholder="XXXXXXXX-X" title="Por favor ingrese su rut" required="" value="<%= @error_rut_value%>" name="rut_user" id="rut_user" class="form-control" pattern="^[1-9][0-9]{5,7}-[0-9|kK]">
 						<span class="help-block small text-danger" id="error_rut_user"><%= @error_rut_message%></span>
 					</div>

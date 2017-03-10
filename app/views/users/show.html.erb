@@ -15,16 +15,16 @@
         </div>
         <div class="hr-line-dashed"></div>
         <div class="form-group"><label class="col-sm-2 control-label">eMail</label>
-            <div class="col-sm-5"><input type="text" class="form-control" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" id="email_user_form" value="<%= @perfil.email_user %>"> </div>
+            <div class="col-sm-5"><input type="text" class="form-control" pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" id="email_user_form" value="<%= @perfil.email_user %>" name="email"> </div>
         </div>
         <div class="hr-line-dashed"></div>
         <div class="form-group"><label class="col-sm-2 control-label">Nuevo Password</label>
 
-            <div class="col-sm-5"><input type="password"  class="form-control" name="password" required id="password_user"  maxlength="20" title="Su contraseña debe tener mínimo 6 y máximo 20 caracteres" autocomplete="off" ></div>
+            <div class="col-sm-5"><input type="password"  class="form-control" name="password"  id="password_user"  maxlength="20" title="Su contraseña debe tener mínimo 6 y máximo 20 caracteres" autocomplete="off" ></div>
         </div>
         <div class="form-group"><label class="col-sm-2 control-label">Confirme su Password</label>
 
-            <div class="col-sm-5"><input type="password" name="password" class="form-control" minlength="6" maxlength="20"  required id="confirm_password"><span id="error_password_user" class="help-block text-danger"></span></div>
+            <div class="col-sm-5"><input type="password" name="password" class="form-control" minlength="6" maxlength="20"  id="confirm_password"><span id="error_password_user" class="help-block text-danger"></span></div>
         </div>
         <div class="hr-line-dashed"></div>
         <!--<div class="form-group"><label class="col-lg-2 control-label">Disabled</label>
@@ -39,8 +39,7 @@
         <div class="hr-line-dashed"></div>-->
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-2">
-                <button class="btn btn-default" type="submit">Cancel</button>
-                <button class="btn btn-primary" type="submit" id="guardar_cambios">Save changes</button>
+                <button class="btn btn-primary" type="submit" id="guardar_cambios">Guardar cambios</button>
             </div>
         </div>
     </form>
@@ -55,44 +54,67 @@
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="/vendor/purchases.js"></script>
-<script> $(document).on('click', '#guardar_cambios', function(e){
-  e.preventDefault();
+<script> 
+  $(document).on('click', '#guardar_cambios', function(e){
+    e.preventDefault();
 
-  var a = new Object();
-  var password = $('#password_user').val();
-  var confirm = $('#confirm_password').val();
-  //console.log(password.length, confirm);
-  if(password.length >20 || password.length < 6){
-    a.error = "Las contraseñas deben tener entre 6 y 20 caracteres";
-    $('#error_password_user').append(JSON.stringify(a.error)).animateCss('fadeIn');
-  }
-  else
-  {
-  if(password == confirm){
-    var obj = new Object();
-    obj.password_user = $('#password_user').val();
-    obj.email_user = String($('#email_user_form').val());
-    console.log(obj.password_user);
+    var a = new Object();
+    var password = $('#password_user').val();
+    var confirm = $('#confirm_password').val();
+    var objemail = new Object();
+  //console.log(password.length, !$(confirm));
+  if( password.length == 0 && confirm.length == 0 ){
+           objemail.email_user = String($('#email_user_form').val());
+           console.log(objemail.email_user, password.length, confirm.length);
     $.ajax({
-    type: "PATCH",
-    url: "/users/update/"+<%= session[:current_user_id]%>,
-    data: {updateuser: obj},
-    success: function() {
-      swal({ title: "Modificado", text: "Clave modificada correctamente.", type: "success", timer: 3000 });
-      },
+          type: "PUT",
+          url: "/users/updatemail/"+<%= session[:current_user_id]%>,
+          data: {objemail},
+          success: function() {
+            swal({ title: "Modificado", text: "Email modificado correctamente.", type: "success", timer: 3000 });
+          },
 
-    
-  });
+          
+        });
+
   }
-  else
-  {  
-    a.error = "Las contraseñas no coinciden";
-   // console.log(a);
-    //console.log(JSON.stringify(a));
-    $('#error_password_user').append(JSON.stringify(a.error)).animateCss('fadeIn');
-  }
-}
-});
+  else{
+    if (password.match(/^\s*|\s*$/g) || confirm.match(/^\s*|\s*$/g)) {
+        $('#password_user').val(password.replace(/^\s*|\s*$/g, ''));
+        $('#confirm_password').val(confirm.replace(/^\s*|\s*$/g, ''));      
+   }
+    if(password.length >20 || password.length < 6){
+      a.error = "Las contraseñas deben tener entre 6 y 20 caracteres";
+      $('#error_password_user').append(JSON.stringify(a.error)).animateCss('fadeIn');
+    }
+    else
+    {
+      if(password == confirm){
+        var obj = new Object();
+        obj.password_user = $('#password_user').val();
+        obj.email_user = String($('#email_user_form').val());
+        console.log(obj.password_user);
+        $.ajax({
+          type: "PATCH",
+          url: "/users/update/"+<%= session[:current_user_id]%>,
+          data: {updateuser: obj},
+          success: function() {
+            swal({ title: "Modificado", text: "Usuario modificado correctamente.", type: "success", timer: 3000 });
+          },
+
+
+        });
+      }
+      else
+      {  
+        a.error = "Las contraseñas no coinciden";
+           // console.log(a);
+            //console.log(JSON.stringify(a));
+            $('#error_password_user').append(JSON.stringify(a.error)).animateCss('fadeIn');
+          }
+        }
+      }
+    });
 
 $(document).on('keypress', ':input', function(){
   var a = $(this).attr('name');

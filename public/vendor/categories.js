@@ -14,7 +14,7 @@ $(function () {
         { "data": "id", 
         "sClass": "text-center","orderable": false,"searchable": false,
            "render": function(data,type,row,meta){
-              return '<button data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha hide_on_big"><i class="fa fa-address-card-o fa-2"></i></button>                                 <button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>   <button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
+              return '<button title="Editar" class="btn btn-xs btn-info modal_editar" type="button" data-id="'+row.id+'"><i class="fa fa-pencil"></i></button>  <button title="Eliminar" class="btn btn-xs btn-danger eliminar_registro" data-campo="'+row.id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>'
            }
         } 
      ],
@@ -23,19 +23,23 @@ $(function () {
 
 $(document).on('click', '.eliminar_registro', function (e){
   e.preventDefault();
+  var id = $(this).data('campo');
   var form = $('#form_delete');
   var url = form.attr('action').replace(':campo_id', $(this).data('campo'));
   var data = form.serialize();
   var row = $(this).parents('tr');
   var dt = $('#datatables').DataTable();
   swal({ title: "Está seguro?", text: "Se eliminara el registro.", type: "warning", showCancelButton: true, confirmButtonColor: "#f05050", confirmButtonText: "Si, Eliminarlo!"
-}).then(function () { 
-    $.post(url,data,function(result){
-      
-      dt.row(row).remove().draw();
-    swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);
-    }); 
-}).catch(swal.noop);
+}).then(function () {
+     $.ajax({
+      type: "PUT",
+      url: "/categories/delete/"+id,
+      success: function(){
+    dt.row(row).remove().draw();
+    swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);}
+  });
+  }).catch(swal.noop); 
+
 });
 
 

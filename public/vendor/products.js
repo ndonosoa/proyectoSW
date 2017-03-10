@@ -1,3 +1,5 @@
+
+
 $(document).on('click', '.revisar_ficha_big', function(e){
     $('#contenedor_historial').toggleClass('hide');
     $('#contenedor_principal').toggleClass('hide');

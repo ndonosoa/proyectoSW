@@ -4,81 +4,28 @@
 
 //Llena la tabla de ordenes de compra
 
-
-
-$(function(){
-
-  var fecha ;
-  var id;
-  var total;
-  var proveedor;
-  t2 = $('#datatables_pendiente').DataTable();
-  $.get("/purchases/json/getpurchases", function(result){
-    
-    $(result.purchases).each(function(a, b){
-        var i = 0;
-      while(i < 4){
-       // console.log(b.created_at,b.id,b.name_provider,b.total_purchase);
-       // console.log(i);
-       
-        switch(i){
-          case 0: fecha = (b.created_at).substring(0,10); break;
-          case 1:  id = parseInt(b.id); break;
-          case 2: proveedor = b.name_provider; break;
-          case 3:  total = parseInt(b.total_purchase); break;
-          default:break;}
-          
-        i = i +1;  
-      }
-     // console.log(fecha,id,proveedor,total);
-          var row = t2.row.add([id,fecha,proveedor, total, '<button title="Ver Ficha" data-id="'+id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button data-id="'+id+'" data-name_provider="'+proveedor+'" data-created_at="'+fecha+'" data-total_purchase="'+total+'"  class="btn btn-xs btn-primary boton_state" >Estado</button>']).draw(false).node();
-
-    });
-  });
-
-  var id2;
-  var e = 0;
-$('#datatables_pendiente tr').each(function(c,d){
-    console.log(d);
-    $(d).each(function(e,f){
-      console.log(f);
-      if(e == 0){
-        id2 = f.id;
-      }
-      e = e +1;
-    })
-    console.log(c);
-  //var tr = $(this).closest('tr');
-  //console.log(id);
- /* $.get('/purchases/json/getdetalleorden/'+id, function(result){
-      (result.detalle).each(function(a,b){
-        if(isEmpty(b)){
-          tr.remove();
-        }
-      });
-  });*/
-
-});
-
-});
-
-/*$('#datatables_pendiente').dataTable({ 
-   "columns": [
-   {"data": "id"},
-   {"data":"name_provider" },
-{"data":"created_at"}, 
-{"data":"total_purchase"},          
-{ "data": "id", 
-"sClass": "text-center","orderable": false,"searchable": false,
-"render": function(data,type,row,meta){
-  return  '<button title="Ver Ficha" data-id="'+row.id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button data-id="'+row.id+'" data-name_provider="'+row.name_provider+'" data-created_at="'+row.created_at+'" data-total_purchase="'+row.total_purchase+'"  class="btn btn-xs btn-primary boton_state" >Estado</button>'
-}
-} 
-],
-});*/
-
   
+$(document).on('click', '.eliminar_registro', function (e){
+  e.preventDefault();
+  var id = $(this).data('campo');
+  var form = $('#form_delete');
+  var data = form.serialize();
+  var row = $(this).parents('tr');
+  var table = $(this).parents('table').attr('name');
+  var dt = $('#datatables_'+table).DataTable();
+  //console.log(table);   
+  swal({ title: "Está seguro?", text: "Se eliminara el registro.", type: "warning", showCancelButton: true, confirmButtonColor: "#f05050", confirmButtonText: "Si, Eliminarlo!"
+}).then(function () {
+     $.ajax({
+      type: "PUT",
+      url: "/purchases/delete/"+id,
+      success: function(){
+    dt.row(row).remove().draw();
+    swal({ title: 'Eliminado!', text: 'El registro fue eliminado correctamente.', type: "success", timer: 1500 }).catch(swal.noop);}
+  });
+  }).catch(swal.noop); 
 
+});
 
 $(function(){
     var table2 = $('#datatables_despachada').DataTable();
@@ -126,8 +73,8 @@ $(document).on('click', '.boton_state', function(e){
     url: "/purchases/updatedetail/"+id,
     data: {obj,cont},
     success: function() { 
-      swal({ title: 'Eliminado!', text: 'La Orden fue actualizada correctamente', type: "success", timer: 1500 }).catch(swal.noop);
-      table2.row.add([id,provider,date,total,'<button title="Ver Ficha" data-id="'+id+'" id="'+id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>']).draw();
+      swal({ title: 'Actualizado!', text: 'La Orden fue actualizada correctamente', type: "success", timer: 1500 }).catch(swal.noop);
+      table2.row.add([id,provider,date,total,'<button title="Ver Ficha" data-id="'+id+'" id="'+id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button> <button title="Eliminar" class="btn btn-xs btn-danger hide_on_small eliminar_registro" data-campo="'+id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>']).draw();
       //$(row).find('td').eq(5).data('id', id);
       tr.remove();
     }
@@ -183,26 +130,27 @@ $('#btn_revisar_ordenes').on('click', function(e){
   var total = 0;
   $('#datatables_orden tbody tr').each(function(i,row){
     //console.log(row);
-    //console.log($(this).children()); //.innerText
+  //  console.log($(this).children()); //.innerText
     var cont=0; var subt = 0; var c = "";
     $(this).children().each(function(a,b){
      // console.log(b);
      cont++;
      switch(cont){
       case 1: c += '<tr><td><div><strong>' + b.innerText + '</strong></div></td>'; break;
-      case 3: var o = parseInt(b.firstChild.value);
+      case 2: c+= '<td>' + b.innerText + '</td>'; break;
+      case 4: var o = parseInt(b.firstChild.value);
       if(isNaN(o))
         cant = 1;
       else
         cant = o; 
       c+= '<td>' + cant + '</td>'; break;
-      case 4: var r = parseInt(b.firstChild.value);
+      case 5: var r = parseInt(b.firstChild.value);
       if(isNaN(r))
         precio = 1;
       else
         precio = r; 
       c += '<td>' + precio + '</td>';break;
-      case 5:  subt = cant * precio; c += '<td>' + subt + '</td></tr>'; break;
+      case 6:  subt = cant * precio; c += '<td>' + subt + '</td></tr>'; break;
       default:break;
     }
 
@@ -237,6 +185,7 @@ $(function () {
       }
 
       var prod = $(this).closest('tr').find('td').eq(0).text();
+      var codigo = $(this).closest('tr').find('td').eq(1).text();
       var stock = $(this).closest('tr').find('td').eq(2).text();
       //alert($(this).closest('tr').find('td').eq(0).text());
       //var stock = $('#stock_'+id).text();
@@ -244,7 +193,7 @@ $(function () {
 
       tr.toggleClass('hide');
 
-      var row = t2.row.add([prod,stock,'<input class="cantidad" maxlength="3" name="cantidad" id="'+id+'" type="text"  value="1"  style="text-align:right;">','<input class="precio" maxlength="5" name="precio" type="text" value="'+value+'" style="text-align:right;" >','<span class="subt" style="font-weight: bold;">'+value+'</span>','<button class="deselect btn btn-danger" id="'+id+'" data-id='+id+'>X</button>']).draw(false).node();
+      var row = t2.row.add([prod,codigo,stock,'<input class="cantidad" maxlength="5" name="cantidad" id="'+id+'" type="text"  value="1"  style="text-align:right;">','<input class="precio" maxlength="7" name="precio" type="text" value="'+value+'" style="text-align:right;" >','<span class="subt" style="font-weight: bold;">'+value+'</span>','<button class="deselect btn btn-danger" id="'+id+'" data-id='+id+'>X</button>']).draw(false).node();
       //$(row).find('td').eq(5).data('id', id);
       
     });
@@ -321,10 +270,13 @@ $('#btn_filtrar_proveedor').on('click', function(e){
     var select = $('#proveedor_id_form').val();
     $('#contenedor_principal').toggleClass('hide');
     $('#contenedor_proveedores').toggleClass('hide');
+    $('#btn_revisar_ordenes').attr('disabled','disabled');
    // $('#btn_mostrar_filtro').toggleClass('hide'); 
     $.get("/purchases/json/getproductosorden/"+select,function(result){
-     // console.log(result);
-      $('#nombre_proveedor').text("Proveedor: "+result.productos[0].name_provider); 
+    // console.log(result);
+      $('#nombre_proveedor').text("Proveedor: "+result.productos[0].name_provider);
+      $('#proveedor').text(result.productos[0].name_provider);
+      $('#proveedor_mail').text("Email: "+result.productos[0].email_provider); 
       var table = $('#datatables_producto').DataTable();
       table.clear().draw();
       table.rows.add(result.productos).draw();

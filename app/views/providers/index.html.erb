@@ -55,7 +55,7 @@
     						<div class="form-group">
     							<label class="col-sm-2 control-label">Nombre</label>
     							<div class="col-sm-10">
-    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" required class="form-control" autocomplete="off" maxlength="40">
+    								<input id="nombre_provider_form" name="provider[name_provider]" type="text" required class="form-control" autocomplete="off" maxlength="70" pattern="^[\w | \s]{4,70}">
     								<span id="error_nombre_provider" class="help-block text-danger"></span>
     							</div>
     						</div>
@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Comuna</label>
                                 <div class="col-sm-10">
-                                    <select name="provider[comuna_id]" id="comuna_provider_form" class="form-control m-b">
+                                    <select name="provider[comuna_id]" id="comuna_provider_form" class="form-control m-b" required>
                                      <% @comunas.each do |comuna| %>
                                         <option value="<%=comuna.id%>"><%= comuna.nombre_comuna%></option>
                                      <%end%>

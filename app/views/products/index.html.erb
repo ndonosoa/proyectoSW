@@ -30,7 +30,7 @@
         </table>
       </div>
     </div>
-
+    <div><button class="btn btn-info" id="btn_to_pdf" style="text-align:right;">Generar Imagen</button></div>
   </div>
 </div>
 <div id="contenedor_historial" class="row hide">
@@ -40,6 +40,7 @@
       <div class="panel-body  card-box">
       <button id="btn_volver" class="btn btn-info">Volver</button>
         <br><br>
+        <div><span class="help-block" style="font-size: x-large" id="nombre_proveedor">Historial de Productos</span></div>
         <table id="datatables_historial" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
           <thead>
             <tr>
@@ -51,7 +52,6 @@
         </table>
       </div>
     </div>
-
   </div>
 </div>
 
@@ -100,7 +100,7 @@
                 <div class="form-group">
                   <label class="col-sm-2 control-label">Proveedor</label>
                   <div class="col-sm-10">
-                    <select name="product[provider_id]" id="provider_id_form" class="form-control m-b">
+                    <select name="product[provider_id]" id="provider_id_form" class="form-control m-b" required>
                      <% @providers.each do |provider| %>
                      <option value="<%=provider.id%>"><%= provider.name_provider%></option>
                      <%end%>
@@ -112,7 +112,7 @@
                <div class="form-group">
                 <label class="col-sm-2 control-label">Categoria</label>
                 <div class="col-sm-10">
-                  <select name="product[category_id]" id="category_id_form" class="form-control m-b">
+                  <select name="product[category_id]" id="category_id_form" class="form-control m-b" required>
                    <% @categories.each do |category| %>
                    <option value="<%=category.id%>"><%= category.name_category%></option>
                    <%end%>
@@ -124,7 +124,7 @@
              <div class="form-group">
               <label class="col-sm-2 control-label">Marca</label>
               <div class="col-sm-10">
-                <select name="product[brand_id]" id="brand_id_form" class="form-control m-b">
+                <select name="product[brand_id]" id="brand_id_form" class="form-control m-b" required>
                  <% @brands.each do |brand| %>
                  <option value="<%=brand.id%>"><%= brand.name_brand%></option>
                  <%end%>
@@ -162,19 +162,34 @@
 <script src="/vendor/products.js"></script>
 
 <script>
+$('#btn_to_pdf').on('click', function(){
+  html2canvas($("#contenedor_datos"), {
+    onrendered: function(canvas) {
+      theCanvas = canvas;
+      Canvas2Image.saveAsPNG(canvas); 
+    }
+  });
+});
+
+
  <%if session[:current_user] == 1 %>
   $(function () {
   $('#datatables').dataTable({
      "ajax": "/products/json/getproducts",
      "sAjaxDataProp": "productos",
      "dom": 'Bfrtip',
+     "bPaginate": false,
      "buttons": ['excelHtml5', 'pdfHtml5'],
      "columns": [
         {"data":"name_product"},
         {"data":"code_product"},
         {"data":"price_product"},
         {"data": "stock_product"},
-        {"data":"name_provider"},           
+        {"data":"name_provider",
+        "sClass": "text-center","orderable": false,"searchable": false,
+        "render": function(data,type,row,meta){
+          return '<a href="purchases/new">'+row.name_provider+'</a>'
+        }},           
         {"data": "name_category" },
         {"data": "name_brand" },
      ],
@@ -182,23 +197,27 @@
 });
 <%else%>
 $(function () {
+  var doc = new jsPDF();
   $('#datatables').dataTable({
      "ajax": "/products/json/getproducts",
      "sAjaxDataProp": "productos",
      "dom": 'Bfrtip',
+     "bPaginate": false,
      "buttons": [{
                   extend :'excelHtml5',
                   exportOptions: {columns: [0,1,2,3,4,5,6]}
-      }, {
-        extend : 'pdfHtml5',
-        exportOptions: {columns: [0,1,2,3,4,5,6]}}],
+      }],
       "columns": [
         {"data":"name_product"},
         {"data":"code_product"},
         {"data":"price_product"},
         {"data": "stock_product"},
-        {"data":"name_provider"},           
-        {"data": "name_category" },
+        {"data":"name_provider" ,
+      "sClass": "text-center","orderable": false,"searchable": false,
+        "render": function(data,type,row,meta){
+          return '<a href="purchases/new">'+row.name_provider+'</a>'
+        }},           
+        {"data": "name_category"},
         {"data": "name_brand" },
         { "data": "id", 
         "sClass": "text-center","orderable": false,"searchable": false,

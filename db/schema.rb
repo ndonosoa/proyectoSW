@@ -10,21 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170309151811) do
+ActiveRecord::Schema.define(version: 20170310013934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "brands", force: :cascade do |t|
     t.string   "name_brand"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "state_brand"
   end
 
   create_table "categories", force: :cascade do |t|
     t.string   "name_category"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.integer  "state_category"
   end
 
   create_table "comunas", force: :cascade do |t|
@@ -32,26 +34,18 @@ ActiveRecord::Schema.define(version: 20170309151811) do
     t.integer  "region_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "state_comuna"
     t.index ["region_id"], name: "index_comunas_on_region_id", using: :btree
   end
 
   create_table "price_histories", force: :cascade do |t|
-    t.string   "price_history"
     t.integer  "product_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
     t.integer  "purchase_id"
+    t.bigint   "price_histories"
     t.index ["product_id"], name: "index_price_histories_on_product_id", using: :btree
     t.index ["purchase_id"], name: "index_price_histories_on_purchase_id", using: :btree
-  end
-
-  create_table "product_providers", force: :cascade do |t|
-    t.integer  "product_id"
-    t.integer  "provider_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["product_id"], name: "index_product_providers_on_product_id", using: :btree
-    t.index ["provider_id"], name: "index_product_providers_on_provider_id", using: :btree
   end
 
   create_table "products", force: :cascade do |t|
@@ -62,9 +56,9 @@ ActiveRecord::Schema.define(version: 20170309151811) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.string   "code_product"
-    t.integer  "price_product"
     t.integer  "stock_product"
     t.integer  "state_product"
+    t.bigint   "price_product"
     t.index ["brand_id"], name: "index_products_on_brand_id", using: :btree
     t.index ["category_id"], name: "index_products_on_category_id", using: :btree
     t.index ["provider_id"], name: "index_products_on_provider_id", using: :btree
@@ -84,22 +78,22 @@ ActiveRecord::Schema.define(version: 20170309151811) do
 
   create_table "purchase_details", force: :cascade do |t|
     t.integer  "quantity_product"
-    t.integer  "price_purchase_detail"
     t.integer  "purchase_id"
     t.integer  "product_id"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.bigint   "price_purchase_detail"
     t.index ["product_id"], name: "index_purchase_details_on_product_id", using: :btree
     t.index ["purchase_id"], name: "index_purchase_details_on_purchase_id", using: :btree
   end
 
   create_table "purchases", force: :cascade do |t|
-    t.integer  "total_purchase"
     t.integer  "provider_id"
     t.integer  "user_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.integer  "state_purchase"
+    t.bigint   "total_purchase"
     t.index ["provider_id"], name: "index_purchases_on_provider_id", using: :btree
     t.index ["user_id"], name: "index_purchases_on_user_id", using: :btree
   end
@@ -109,10 +103,10 @@ ActiveRecord::Schema.define(version: 20170309151811) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "odeplan_region"
+    t.integer  "state_region"
   end
 
   create_table "stock_histories", force: :cascade do |t|
-    t.integer  "price_stock_history"
     t.integer  "quantity_stock_history"
     t.integer  "product_id"
     t.datetime "created_at",             null: false
@@ -120,15 +114,6 @@ ActiveRecord::Schema.define(version: 20170309151811) do
     t.integer  "purchase_id"
     t.index ["product_id"], name: "index_stock_histories_on_product_id", using: :btree
     t.index ["purchase_id"], name: "index_stock_histories_on_purchase_id", using: :btree
-  end
-
-  create_table "stocks", force: :cascade do |t|
-    t.integer  "quantity_stock"
-    t.integer  "price_stock"
-    t.integer  "product_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.index ["product_id"], name: "index_stocks_on_product_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -145,8 +130,6 @@ ActiveRecord::Schema.define(version: 20170309151811) do
   add_foreign_key "comunas", "regions"
   add_foreign_key "price_histories", "products"
   add_foreign_key "price_histories", "purchases"
-  add_foreign_key "product_providers", "products"
-  add_foreign_key "product_providers", "providers"
   add_foreign_key "products", "brands"
   add_foreign_key "products", "categories"
   add_foreign_key "products", "providers"
@@ -157,5 +140,4 @@ ActiveRecord::Schema.define(version: 20170309151811) do
   add_foreign_key "purchases", "users"
   add_foreign_key "stock_histories", "products"
   add_foreign_key "stock_histories", "purchases"
-  add_foreign_key "stocks", "products"
 end

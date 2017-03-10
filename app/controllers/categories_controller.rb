@@ -6,15 +6,20 @@ end
 
 
  def getcategories
-    list = Category.all       
+    list = Category.where(state_category: 1)       
     render json: {
       category: list
     }.to_json	
 end
 
-def destroy
+def softdelete
   @category = Category.find(params[:id])
-  @category.destroy
+  @category.state_category = 0
+  if @category.save
+  else
+    render :json => { :errors => @category.errors }, :status => 422
+  end
+
 end
 
 def edit
@@ -34,11 +39,21 @@ end
 
 
 def create
-    @category = Category.new(category_params)
-    if @category.save
+    @reactivar = Category.find_by(name_category: params[:category][:name_category])
+    if @reactivar && @reactivar.state_category == 0
+      @reactivar.state_category = 1
+      if @reactivar.save
+      else
+        render :json => { :errors => @reactivar.errors }, :status => 422
+      end
     else
-    render :json => { :errors => @category.errors }, :status => 422
-  end
+      @asd = Category.new(name_category: params[:category][:name_category],
+                state_category: 1)
+      if @asd.save
+      else
+        render :json => { :errors => @asd.errors }, :status => 422
+      end
+    end
 end
 
 

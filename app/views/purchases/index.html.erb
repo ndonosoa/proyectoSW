@@ -5,7 +5,8 @@
 			<div class="panel-body  card-box">
 				<a href="/purchases/new"><button title="Agregar nuevo Proveedor" id="modal_nuevo" type="button" class="btn btn-success hide_on_small">Nueva Orden</button></a>
 				<br><br>
-				<table id="datatables_pendiente" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+        <div><span class="help-block" style="font-size: x-large">Ordenes de Compra Pendientes</span></div>
+				<table id="datatables_pendiente" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" name="pendiente" style="width: 100%;">
 					<thead>
 						<tr>
 							<th>Id Orden</th>
@@ -18,9 +19,9 @@
 					</thead>
 				</table>
         <div>
-        <span>hola</span>
+        <span class="help-block" style="font-size: x-large">Ordenes de Compra Recibidas</span>
         </div>
-        <table id="datatables_despachada" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+        <table id="datatables_despachada" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" name="despachada" role="grid" style="width: 100%;">
           <thead>
             <tr>
               <th>Id Orden</th>
@@ -32,7 +33,7 @@
           </thead>
           <tbody>
           <% @list.each do |a| %>
-          <tr><td><%=a.id%></td><td><%=a.provider.name_provider%></td><td><%=a.created_at.strftime("%F")%></td><td><%=a.total_purchase%></td> <td><button title="Ver Ficha" data-id="<%=a.id%>" id="<%=a.id%>"  class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button></td></tr>
+          <tr><td><%=a.id%></td><td><%=a.provider.name_provider%></td><td><%=a.created_at.strftime("%F")%></td><td><%=a.total_purchase%></td> <td><button title="Ver Ficha" data-id="<%=a.id%>" id="<%=a.id%>"  class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button><button title="Eliminar" class="btn btn-xs btn-danger hide_on_small eliminar_registro" data-campo="<%=a.id%>" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button></td></tr>
 
           <%end%>
           </tbody>
@@ -48,6 +49,7 @@
       <div class="panel-body  card-box" id="productos">
         <button id="btn_mostrar_ordenes" class="btn btn-info">Volver</button>
         <br><br>
+        <div><span class="help-block" style="font-size: x-large">Detalle Orden de Compra</span></div>
         <table id="datatables_detalle" class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
           <thead>
             <tr>
@@ -68,9 +70,44 @@
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="/vendor/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="/vendor/purchases.js"></script>
+<script>
+  $(function(){
+
+  var fecha ;
+  var id;
+  var total;
+  var proveedor;
+  t2 = $('#datatables_pendiente').DataTable();
+  $.get("/purchases/json/getpurchases", function(result){
+    
+    $(result.purchases).each(function(a, b){
+        var i = 0;
+      while(i < 4){
+       // console.log(b.created_at,b.id,b.name_provider,b.total_purchase);
+       // console.log(i);
+       
+        switch(i){
+          case 0: fecha = (b.created_at).substring(0,10); break;
+          case 1:  id = parseInt(b.id); break;
+          case 2: proveedor = b.name_provider; break;
+          case 3:  total = parseInt(b.total_purchase); break;
+          default:break;}
+          
+        i = i +1;  
+      }
+     // console.log(fecha,id,proveedor,total);
+          var row = t2.row.add([id,fecha,proveedor, total, '<button title="Ver Ficha" data-id="'+id+'" class="btn btn-xs btn-primary2 revisar_ficha_big"><i class="fa fa-paste"></i></button>  <button data-id="'+id+'" data-name_provider="'+proveedor+'" data-created_at="'+fecha+'" data-total_purchase="'+total+'"  class="btn btn-xs btn-primary boton_state" >Estado</button>  <button title="Eliminar" class="btn btn-xs btn-danger hide_on_small eliminar_registro" data-campo="'+id+'" type="button"><i class="fa fa-trash-o"></i> <span class="bold"></span></button>']).draw(false).node();
+
+    });
+  });
+
+});
+
+</script>
+
 <%end%>
 
-<form action="providers/:campo_id" id="form_delete" method="post">
+<form action="purchase/delete/:campo_id" id="form_delete" method="post">
     <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
     <input type="hidden" name="_method" value="delete">
 </form>

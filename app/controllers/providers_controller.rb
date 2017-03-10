@@ -2,7 +2,7 @@ class ProvidersController < ApplicationController
 #before_action :set_provider, only: [:destroy, :edit]
 
 	def index
-		@comunas = Comuna.all
+		@comunas = Comuna.where(state_comuna: 1)
 	end
 
 	def getproviders

@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
 			if user.password_user == params[:password_user]
 				session[:current_user] = user.type_user
 				session[:current_user_id] = user.id
+				session[:current_user_name] = user.name_user
 				redirect_to root_path
 			else
 				@error_password_message = "Contraseña incorrecta"

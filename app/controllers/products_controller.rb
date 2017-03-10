@@ -2,9 +2,9 @@ class ProductsController < ApplicationController
 skip_before_filter :permission
 
 def index
-	@providers = Provider.all
-  @brands = Brand.all
-  @categories = Category.all
+	@providers = Provider.where(state_provider: 1)
+  @brands = Brand.where(state_brand: 1)
+  @categories = Category.where(state_category: 1)
 end
 
 def asd
@@ -49,14 +49,29 @@ end
 def destroy
   @product = Product.find(params[:id])
   @product.state_product = 0
-  @product.save
+  if @product.save
+  else
+    render :json => { :errors => @product.errors }, :status => 422
+  end
 end
 
 def create
-  @product = Product.new(product_params)
-  @product.state_product = 1
-  @product.save
-end
+    @reactivar = Product.find_by(code_product: params[:product][:code_product])
+    if @reactivar && @reactivar.state_product == 0
+      @reactivar.state_product = 1
+      if @reactivar.save
+      else
+        render :json => { :errors => @reactivar.errors }, :status => 422
+      end
+    else
+      @asd = Product.new(product_params)
+      @asd.state_product = 1
+      if @asd.save
+      else
+        render :json => { :errors => @asd.errors }, :status => 422
+      end
+    end
+   end
 
 def product_params
     params.require(:product).permit(:name_product, :price_product,

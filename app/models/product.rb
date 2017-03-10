@@ -5,4 +5,5 @@ class Product < ApplicationRecord
   has_many :stock_histories, dependent: :destroy
   has_many :price_histories, dependent: :destroy
   has_many :purchase_detail, dependent: :destroy
+  validates :code_product, presence: true, uniqueness: true
 end

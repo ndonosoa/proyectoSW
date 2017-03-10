@@ -5,15 +5,24 @@ class BrandsController < ApplicationController
 	end
 
 	def getbrands
-		list = Brand.all      
+		list = Brand.where(state_brand: 1)      
 		render json: {
 			brand: list
 			}.to_json	
 	end
 
-	def destroy
+	def softdelete
 		@brand = Brand.find(params[:id])
-		@brand.destroy
+		@brand.state_brand = 0
+		if @brand.save
+		else
+			render :json => { :errors => @brand.errors }, :status => 422
+		end
+
+	end
+
+	def destroy
+		
 	end
 
 	def edit
@@ -26,24 +35,30 @@ class BrandsController < ApplicationController
 	def update
 
 		@brand = Brand.find(params[:id])
-		if @brand.update(brand_params)
+		if @brand.update(name_brand: params[:brand][:name_brand])
 		else
 			render :json => { :errors => @brand.errors }, :status => 422
 		end
 	end
 
 	def create
-		@brand = Brand.new(brand_params)
-
-		if @brand.save
+		@reactivar = Brand.find_by(name_brand: params[:brand][:name_brand])
+		if @reactivar && @reactivar.state_brand == 0
+			@reactivar.state_brand = 1
+			if @reactivar.save
+			else
+				render :json => { :errors => @reactivar.errors }, :status => 422
+			end
 		else
-    	render :json => { :errors => @brand.errors }, :status => 422
- 	 end
+			@asd = Brand.new(name_brand: params[:brand][:name_brand],
+								state_brand: 1)
+			if @asd.save
+			else
+				render :json => { :errors => @asd.errors }, :status => 422
+			end
+		end
    end
 
-	def brand_params
-		params.require(:brand).permit(:name_brand)
-	end
 
 end
 

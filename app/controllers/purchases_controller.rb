@@ -6,9 +6,8 @@ class PurchasesController < ApplicationController
 
 	
 	def new
-		@providers = Provider.all
-		@categories = Category.all
-		@brands  = Brand.all 
+		@providers = Provider.where(state_provider: 1)
+		 
 	end
 
 
@@ -31,7 +30,7 @@ class PurchasesController < ApplicationController
 	end
 
 	def getproductosorden
-		sql = "select p.id, p.stock_product, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider 
+		sql = "select p.id, p.stock_product, p.price_product, p.code_product, p.name_product, b.name_brand, c.name_category, a.name_provider, a.email_provider 
 		from products p 
 		inner join brands b on (b.id = p.brand_id) 
 		inner join categories c on (c.id = p.category_id)
@@ -81,6 +80,15 @@ class PurchasesController < ApplicationController
 
 	end
 
+	def softdelete
+		@purchase = Purchase.find(params[:id])
+		@purchase.state_purchase = 2
+		if @purchase.save
+		else
+			render :json => { :errors => @purchase.errors }, :status => 422
+		end
+		
+	end
 
 
 	def updatedetail
@@ -148,7 +156,7 @@ class PurchasesController < ApplicationController
 				if @purchase_detail.save 
 					producto = Product.find(@product_id)
 					producto.price_product = @price_product 
-					if producto.save
+					if producto.save 
 						cont = cont + 1				
 					end
 				else

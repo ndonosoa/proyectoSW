@@ -10,15 +10,19 @@ end
 
 
  def getregions
-    list = Region.all       
+    list = Region.where(state_region: 1)      
     render json: {
       region: list
     }.to_json	
 end
 
-def destroy
+def softdelete
   @region = Region.find(params[:id])
-  @region.destroy
+  @region.state_region = 0
+  if @region.save
+  else
+       render :json => { :errors => @region.errors }, :status => 422
+  end
 end
 
 def edit
@@ -39,12 +43,23 @@ end
 
 
 def create
-    @region = Region.new(region_params)
-   if @region.save
-   else
-      render :json => { :errors => @region.errors }, :status => 422
+    @reactivar = Region.find_by(name_region: params[:region][:name_region])
+    if @reactivar && @reactivar.state_region == 0
+      @reactivar.state_region = 1
+      if @reactivar.save
+      else
+        render :json => { :errors => @reactivar.errors }, :status => 422
+      end
+    else
+      @asd = Region.new(name_region: params[:region][:name_region],
+                state_region: 1,
+                  odeplan_region: params[:region][:odeplan_region])
+      if @asd.save
+      else
+        render :json => { :errors => @asd.errors }, :status => 422
+      end
     end
-  end
+   end
 
 
    def region_params
